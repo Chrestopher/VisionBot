@@ -114,4 +114,4 @@ async def on_ready():
     print('------')
 
 
-client.run(API_KEYS.bot_cli)
+client.run(API_KEYS.bot_cli_key)
