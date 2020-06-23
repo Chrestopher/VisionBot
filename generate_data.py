@@ -1,0 +1,15 @@
+def generate_joe():
+    joe_messages = []
+    with open("botrepo.txt", 'r', encoding="utf-8-sig") as f:
+        for x in f:
+            joe_messages.append(x.strip())
+    return joe_messages
+
+
+def generate_pokemon():
+    pokemon_list = []
+    with open("pokemon_list.txt", 'r', encoding="utf-8-sig") as f:
+        for x in f:
+            pokemon_list.append(x.strip())
+
+    return pokemon_list

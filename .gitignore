@@ -1,0 +1,11 @@
+venv/
+.idea/
+API_KEYS.py
+*.pyc
+__pycache__/
+*__pycache__
+*/*/*/__pycache__/
+
+*/*/__pycache__/
+
+*/__pycache__/
