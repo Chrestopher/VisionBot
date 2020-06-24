@@ -1,0 +1,109 @@
+{
+	"name": "Bulbasaur",
+	"dex_number": 1,
+	"other_names": {
+		"jname": "",
+		"fname": "",
+		"gname": "",
+		"kname": ""
+	},
+	"properties": {
+		"ev": "1 Sp. Attack",
+		"classification": "Seed Pokemon",
+		"height": 0.7,
+		"weight": 6.9,
+		"capture_rate": 45,
+		"base_egg_steps": 5120,
+		"egg_groups": [
+			"monster",
+			"grass"
+		]
+	},
+	"weakness": {
+		"normal": 1,
+		"fire": 2,
+		"water": 0.5
+	},
+	"base_stats": {
+		"total": 0,
+		"hp": 0,
+		"att": 0,
+		"def": 0,
+		"spa": 0,
+		"spd": 0,
+		"spe": 0
+	},
+	"abilities": {
+		"overgrow": {
+			"name": "overgrow",
+			"description": "When sunny, the Pokémon’s Speed doubles.",
+			"HA": false
+		},
+		"chlorophyll": {
+			"name": "chlorophyll",
+			"description": "When HP is below 1/3rd its maximum, power of Grass-type moves is increased by 50%.",
+			"HA": true
+		}
+	},
+	"moves": {
+		"levelup": {
+			"Tackle": {
+				"level": 0,
+				"name": "Tackle",
+				"description": "an attack that hits things",
+				"type": "normal",
+				"cat": "physical",
+				"power": 40,
+				"accuracy": 95,
+				"pp": 45,
+				"chance": 0
+			}
+		},
+		"tms": {
+			"tm": 10,
+			"name": "Magical Leaf",
+			"description": "an attack that hits things",
+			"type": "grass",
+			"cat": "special",
+			"power": 40,
+			"accuracy": 101,
+			"pp": 45,
+			"chance": 0
+		},
+		"trs": {
+			"tm": 0,
+			"name": "Swords Dance",
+			"description": "an attack that hits things",
+			"type": "normal",
+			"cat": "status",
+			"power": 0,
+			"accuracy": 101,
+			"pp": 45,
+			"chance": 0
+		},
+		"eggmoves": {
+			"parents": [
+				"squirtle",
+				"wartortle"
+			],
+			"name": "Skull Bash",
+			"description": "an attack that hits things",
+			"type": "grass",
+			"cat": "special",
+			"power": 40,
+			"accuracy": 101,
+			"pp": 45,
+			"chance": 0
+		},
+		"tutor": {
+			"name": "Grass Pledge",
+			"description": "an attack that hits things",
+			"type": "grass",
+			"cat": "special",
+			"power": 40,
+			"accuracy": 101,
+			"pp": 45,
+			"chance": 0
+		}
+	}
+}
