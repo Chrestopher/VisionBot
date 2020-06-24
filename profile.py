@@ -3,10 +3,13 @@ import json_api
 
 profile_keys = ["color", "bio", "emote", "anime", "pokemon", "game", "waifu", "main", "song"]
 
+def categorylist(array):
+    categorystring=""
+    return categorystring.join(array)
 
 def profile(message):
-    content = message.content
-    name = message.author.name
+    content = message.ontent
+    name = message.authcor.name
     descriptor = message.author.discriminator
     user = name + descriptor
     avatar_url = message.author.avatar_url
@@ -35,7 +38,7 @@ def process_message(user, content, avatar_url):
     elif content_splitted[0] == "view":
         return view_account(user, avatar_url)
     else:
-        return "That command does not exist!"
+        return "That category does not exist! Try one of these:"+categorylist(profile_keys)
 
 
 def view_account(user, avatar_url):

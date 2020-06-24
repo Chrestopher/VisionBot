@@ -78,7 +78,10 @@ async def command_checker(message):
         msg = schedule.remove_event(message.content)
         await message.channel.send(msg)
         return
-
+ if message.content.startswith("!categories")
+    msg="The Categories for a profile are:"+profile.categorylist(profile.profile_keys)
+        await message.channel.send(msg)
+        return
 
 @client.event
 async def on_message(message):
