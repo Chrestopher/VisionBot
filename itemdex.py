@@ -1,15 +1,25 @@
 from bs4 import BeautifulSoup
 import requests
+import generate_data
 import discord
 
 itemdex_url_prefix = "https://serebii.net/itemdex/"
 itemdex_url_postfix = ".shtml"
+itemdex_list = generate_data.generate_itemdex_list()
 
 
 def get_item(message):
     item_name = message.content[9:]
-    print(item_name)
-    scrape_response = scrape(item_name)
+    found_item_name = ""
+    for item in itemdex_list:
+        if item.startswith(item_name):
+            found_item_name = item
+            break
+
+    if not found_item_name:
+        return "Could not find item"
+
+    scrape_response = scrape(found_item_name)
     if type(scrape_response) is not dict:
         return scrape_response
     else:

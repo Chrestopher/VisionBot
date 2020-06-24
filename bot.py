@@ -16,20 +16,16 @@ bot_client_id = "691856016333078540"
 messages = 0
 blacklisted_channels = ["botandvoicechat", "waifu-bot-spam", "slick-dealz", "waifu-bot-rolls"]
 joe_messages = generate_data.generate_joe()
-pokemon_list = generate_data.generate_pokemon()
-
 
 async def command_checker(message):
     if message.content.startswith('!visionbot'):
-        print(message)
-        print(str(message.content))
         msg = 'Hello {0.author.mention}! I am VisionBot. I post things that Vision may or may not post. @me for random message or !randpoke for a random pokemon.'.format(
             message)
         await message.channel.send(msg)
         return
 
     if message.content.startswith("!randpoke"):
-        msg = randpoke.get_rand_poke(message.content, pokemon_list)
+        msg = randpoke.get_rand_poke(message.content)
         await message.channel.send(msg)
         return
 

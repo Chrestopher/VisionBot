@@ -26,6 +26,7 @@ def grab_items():
             dex_list.append(item["value"][9:-6])
 
     print(dex_list)
+    dex_list.sort()
     write_to_text_file(dex_list)
 
 
@@ -35,7 +36,6 @@ def build_item_embed():
 
 def write_to_text_file(dex_list):
     f = open("content/pokemon/itemdex/itemdex_dictionary.txt", "a")
-
     for item in dex_list:
         f.write(item + "\n")
     f.close()
