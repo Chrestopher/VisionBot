@@ -1,10 +1,10 @@
 import requests
-import API_KEYS
 import os
 
 if os.environ.get("json_api_key"):
     json_api_key = os.environ.get("json_api_key")
 else:
+    import API_KEYS
     json_api_key = API_KEYS.json_api_key
 
 get_headers = {"secret-key": json_api_key}
