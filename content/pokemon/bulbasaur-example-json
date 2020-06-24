@@ -47,7 +47,7 @@
 	},
 	"moves": {
 		"levelup": {
-			"Tackle": {
+			"tackle": {
 				"level": 0,
 				"name": "Tackle",
 				"description": "an attack that hits things",
@@ -59,7 +59,7 @@
 				"chance": 0
 			}
 		},
-		"tms": {
+		"tms": { "magical_leaf": {
 			"tm": 10,
 			"name": "Magical Leaf",
 			"description": "an attack that hits things",
@@ -69,41 +69,47 @@
 			"accuracy": 101,
 			"pp": 45,
 			"chance": 0
-		},
+		}},
 		"trs": {
-			"tm": 0,
-			"name": "Swords Dance",
-			"description": "an attack that hits things",
-			"type": "normal",
-			"cat": "status",
-			"power": 0,
-			"accuracy": 101,
-			"pp": 45,
-			"chance": 0
+			"swords_dance": {
+				"tm": 0,
+				"name": "Swords Dance",
+				"description": "an attack that hits things",
+				"type": "normal",
+				"cat": "status",
+				"power": 0,
+				"accuracy": 101,
+				"pp": 45,
+				"chance": 0
+			}
 		},
 		"eggmoves": {
-			"parents": [
-				"squirtle",
-				"wartortle"
-			],
-			"name": "Skull Bash",
-			"description": "an attack that hits things",
-			"type": "grass",
-			"cat": "special",
-			"power": 40,
-			"accuracy": 101,
-			"pp": 45,
-			"chance": 0
+			"skull_bash": {
+				"parents": [
+					"squirtle",
+					"wartortle"
+				],
+				"name": "Skull Bash",
+				"description": "an attack that hits things",
+				"type": "grass",
+				"cat": "special",
+				"power": 40,
+				"accuracy": 101,
+				"pp": 45,
+				"chance": 0
+			}
 		},
 		"tutor": {
-			"name": "Grass Pledge",
-			"description": "an attack that hits things",
-			"type": "grass",
-			"cat": "special",
-			"power": 40,
-			"accuracy": 101,
-			"pp": 45,
-			"chance": 0
+			"grass_pledge": {
+				"name": "Grass Pledge",
+				"description": "an attack that hits things",
+				"type": "grass",
+				"cat": "special",
+				"power": 40,
+				"accuracy": 101,
+				"pp": 45,
+				"chance": 0
+			}
 		}
 	}
 }
