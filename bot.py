@@ -1,5 +1,6 @@
 import discord
 import API_KEYS
+import os
 import random
 import schedule
 import randpoke
@@ -114,4 +115,9 @@ async def on_ready():
     print('------')
 
 
-client.run(API_KEYS.bot_cli_key)
+if os.environ.get("bot_cli_key"):
+    bot_cli_key = os.environ.get("bot_cli_key")
+else:
+    bot_cli_key = API_KEYS.bot_cli_key
+
+client.run(bot_cli_key)
