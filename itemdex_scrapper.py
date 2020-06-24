@@ -4,9 +4,11 @@ import requests
 # item = "https://serebii.net/itemdex/casteliacone.shtml"
 # pokemon = "https://serebii.net/pokedex-swsh/bulbasaur/"
 
+# Berries are broken for this
+
 
 def grab_items():
-    url_list = ["https://serebii.net/itemdex/casteliacone.shtml", "https://serebii.net/itemdex/potion.shtml"]
+    url_list = ["https://serebii.net/itemdex/casteliacone.shtml", "https://serebii.net/itemdex/potion.shtml", "https://serebii.net/itemdex/revive.shtml", "https://serebii.net/itemdex/relicband.shtml"]
     for url in url_list:
         r = requests.get(url)
         soup = BeautifulSoup(r.text, 'html.parser')
