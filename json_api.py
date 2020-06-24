@@ -1,10 +1,16 @@
 import requests
-import API_KEYS
+import os
 
-get_headers = {"secret-key": API_KEYS.json_api_key}
-put_headers = {"secret-key": API_KEYS.json_api_key, "Content-Type": "application/json", "versioning": "false"}
-profiles_file = API_KEYS.profiles_file
-schedule_file = API_KEYS.schedule_file
+if os.environ.get("json_api_key"):
+    json_api_key = os.environ.get("json_api_key")
+else:
+    import API_KEYS
+    json_api_key = API_KEYS.json_api_key
+
+get_headers = {"secret-key": json_api_key}
+put_headers = {"secret-key": json_api_key, "Content-Type": "application/json", "versioning": "false"}
+profiles_file = "https://api.jsonbin.io/b/5ed27a4579382f568bcfd675"
+schedule_file = "https://api.jsonbin.io/b/5ed1939b60775a5685848841"
 
 
 def put_schedule_json(json):
