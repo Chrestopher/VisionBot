@@ -8,24 +8,36 @@ import requests
 
 
 def grab_items():
-    url_list = ["https://serebii.net/itemdex/casteliacone.shtml", "https://serebii.net/itemdex/potion.shtml", "https://serebii.net/itemdex/revive.shtml", "https://serebii.net/itemdex/relicband.shtml"]
+    url_list = ["https://serebii.net/itemdex/potion.shtml"]
     for url in url_list:
         r = requests.get(url)
         soup = BeautifulSoup(r.text, 'html.parser')
-        contents = soup.find_all('table', class_="dextable")
-        first_row = soup.findAll("td", class_="cen")
-        item_name = contents[0].text.strip()
-        item_description = contents[4].find("td", class_="fooinfo").text.strip()
-        item_image_url = "https://serebii.net" + first_row[0].find("img")["src"]
-        item_type = first_row[1].text
-        print(item_name)
-        print(item_description)
-        print(item_image_url)
-        print(item_type)
-        print()
+        # contents = soup.find_all('table', class_="dextable")
+        first_row = soup.findAll("option")
+
+    dex_list = []
+    x = -1
+    for item in first_row:
+        x += 1
+        #print(x)
+        #print(item)
+        print(item["value"][9:-6])
+        if "/" not in item["value"][9:-6]:
+            dex_list.append(item["value"][9:-6])
+
+    print(dex_list)
+    dex_list.sort()
+    write_to_text_file(dex_list)
 
 
 def build_item_embed():
     pass
+
+
+def write_to_text_file(dex_list):
+    f = open("content/pokemon/itemdex/itemdex_dictionary.txt", "a")
+    for item in dex_list:
+        f.write(item + "\n")
+    f.close()
 
 grab_items()
