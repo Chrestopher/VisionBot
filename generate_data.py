@@ -17,7 +17,7 @@ def generate_pokemon():
 
 def generate_itemdex_list():
     pokemon_list = []
-    with open("content/pokemon/itemdex/itemdex_dictionary.txt", 'r') as f:
+    with open("content/pokemon/itemdex/itemdex_dictionary.txt", 'r', encoding="ISO-8859-1") as f:
         for x in f:
             pokemon_list.append(x.strip())
 
