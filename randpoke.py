@@ -6,18 +6,15 @@ gen_dict = {"1": [0, 170], "2": [171, 270], "3": [271, 407], "4": [408, 514], "5
 
 
 def get_rand_poke(message, pokelist):
-    if len(message) == 9:
+    gentest = message.split()
+    if len(gentest) == 1 or gentest[2] not in gen_dict:
         rand_poke_number = random.randint(0, 911)
         print(pokelist[rand_poke_number])
         return pokelist[rand_poke_number]
-
-    gen = message[10]
-    if gen not in gen_dict:
-        rand_poke_number = random.randint(0, 911)
-        print(pokelist[rand_poke_number])
-        return pokelist[rand_poke_number]
-    else:
-        first = gen_dict[gen][0]
-        last = gen_dict[gen][1]
+    elif len(gentest) == 2 and gentest[2] in gen_dict:
+        first = gen_dict[gentest[2]][0]
+        last = gen_dict[gentest[2]][1]
         rand_poke_number = random.randint(first, last)
         return pokelist[rand_poke_number]
+    else:
+        return "This is not a valid input!"

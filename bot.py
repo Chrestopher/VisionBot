@@ -79,10 +79,13 @@ async def command_checker(message):
         await message.channel.send(msg)
         return
     if message.content.startswith("!categories"):
-        msg="The Categories for a profile are: "+profile.categorylist()
+        msg="The categories for a profile are: "+profile.categorylist()
         await message.channel.send(msg)
         return
-
+    if message.content.startswith("!testrun"):
+        msg = "This command is meant for debugging and testing."
+        await message.channel.send(msg)
+        return
 @client.event
 async def on_message(message):
     if str(message.channel) in blacklisted_channels:
