@@ -13,3 +13,12 @@ def generate_pokemon():
             pokemon_list.append(x.strip())
 
     return pokemon_list
+
+
+def generate_itemdex_list():
+    pokemon_list = []
+    with open("content/pokemon/itemdex/itemdex_dictionary.txt", 'r') as f:
+        for x in f:
+            pokemon_list.append(x.strip())
+
+    return pokemon_list
