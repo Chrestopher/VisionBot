@@ -4,6 +4,7 @@ os_project_path = os.path.dirname(os.path.abspath(__file__))
 
 if os.environ.get("bot_cli_key"):
     os_project_path = os.path.join(os_project_path, os.pardir)[:-3]
+    os_project_path.replace("/", "\\")
 
 
 def generate_joe():
