@@ -3,7 +3,8 @@ import os
 os_project_path = os.path.dirname(os.path.abspath(__file__))
 
 if os.environ.get("bot_cli_key"):
-    os_project_path = os.path.join(os.path.dirname(os_project_path), os.pardir)
+    pass
+    # os_project_path = os.path.join(os_project_path)
 
 
 def generate_joe():
