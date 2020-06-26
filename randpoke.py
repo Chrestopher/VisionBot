@@ -24,5 +24,3 @@ def get_rand_poke(message, pokelist):
         return pokelist[rand_poke_number]
     else:
         return "This is not a valid input!"
-
-4
