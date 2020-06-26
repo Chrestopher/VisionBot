@@ -1,6 +1,13 @@
 import os
 
-os_project_path = os.path.dirname(os.path.abspath(__file__)).replace("/", "\\")
+os_project_path = os.path.dirname(os.path.abspath(__file__))
+print(os_project_path)
+parent_path = os.path.join(os_project_path, os.pardir)
+
+
+if os.environ.get("bot_cli_key"):
+    os_project_path = os.path.join(os_project_path, os.pardir)
+    print(os_project_path)
 
 
 def generate_joe():
@@ -24,6 +31,7 @@ def generate_pokemon():
 
 def generate_itemdex_list():
     file_path = os.path.join(os_project_path, 'content\\pokemon\\itemdex\\itemdex_dictionary.txt')
+    print(file_path)
     item_list = []
     with open(file_path, 'r', encoding="ISO-8859-1") as f:
         for x in f:
