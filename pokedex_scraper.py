@@ -126,7 +126,7 @@ def get_entry(url, name):
             if(ability.startswith("Hidden Ability")):
                 ability = ability.replace("Hidden Ability (Available):", "")
                 ability_split = ability.split(':')
-                name = ability_split[0]
+                name = ability_split[0].strip()
                 desc = ability_split[1].strip()
                 dex_entry.entry["abilities"][name] = {}
                 dex_entry.entry["abilities"][name]["name"] = name
@@ -190,11 +190,50 @@ def get_entry(url, name):
     dex_entry.entry["base_stats"]["spe"] = td[6].text
 
     # Moves (Oh boy)
-    '''
-    tr = soup.find_all('td', string="Standard Level Up")[1].find_parent(
-        "tr").find_next('tr').find_next('tr')
-    td = tr.find_all('td')  # Index the entire row
-    '''
+
+    # Level Up Moves
+
+    tr = soup.find('th', string="Attack Name").find_parent(
+        "tr").find_next('tr')
+    while(tr.text != 'Technical Machine Attacks'):
+        td = tr.find_all('td')  # Index the entire row
+        movename = td[1].text
+        dex_entry.entry["moves"]["levelup"][movename] = {}
+
+        if(td[0].text == '—'):
+            dex_entry.entry["moves"]["levelup"][movename]["level"] = 1
+        else:
+            dex_entry.entry["moves"]["levelup"][movename]["level"] = td[0].text
+
+        typename = td[2].img["alt"].split('-')[1].strip()
+        dex_entry.entry["moves"]["levelup"][movename]["type"] = typename
+
+        catname = td[3].img["alt"].split(' ')[1].strip()
+        dex_entry.entry["moves"]["levelup"][movename]["category"] = catname
+
+        if(td[4].text == "--"):
+            dex_entry.entry["moves"]["levelup"][movename]["attack"] = 0
+        else:
+            dex_entry.entry["moves"]["levelup"][movename]["attack"] = int(
+                td[4].text)
+
+        dex_entry.entry["moves"]["levelup"][movename]["accuracy"] = int(
+            td[5].text)
+
+        dex_entry.entry["moves"]["levelup"][movename]["pp"] = int(td[6].text)
+
+        effpcnt = td[7].text
+        if(effpcnt == '--'):
+            dex_entry.entry["moves"]["levelup"][movename]["effectpcnt"] = 0
+        else:
+            dex_entry.entry["moves"]["levelup"][movename]["pp"] = effpcnt
+
+        tr = tr.find_next('tr')
+        dex_entry.entry["moves"]["levelup"][movename]["description"] = tr.text
+        tr = tr.find_next('tr')
+
+    # TM Moves
+
     # print(dex_entry.entry)
 
     return dex_entry.entry
@@ -211,6 +250,8 @@ def generate_pokedex():
                 Pokedex[name] = get_entry(url_base + name.lower(), name)
             except:
                 print("There was trouble accessing " + name + "'s page")
+
+    print(Pokedex)
 
     with open('pokemon.json', 'w') as outfile:
         json.dump(Pokedex, outfile, indent=4)
