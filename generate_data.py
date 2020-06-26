@@ -27,7 +27,7 @@ def generate_pokemon():
 
 
 def generate_itemdex_list():
-    file_path = os.path.join(os_project_path, 'content\\pokemon\\itemdex\\itemdex_dictionary.txt')
+    file_path = os.path.join(os_project_path, 'content/pokemon/itemdex/itemdex_dictionary.txt')
     item_list = []
     with open(file_path, 'r', encoding="ISO-8859-1") as f:
         for x in f:
