@@ -21,7 +21,7 @@ joe_messages = generate_data.generate_joe()
 @bot.command(name="visionbot")
 async def visionbot_command(ctx):
     msg = 'Hello {0.author.mention}! I am VisionBot. I post things that Vision may or may not post. @me for random ' \
-          'message or !randpoke for a random pokemon.'.format(ctx)
+          'message or !randpoke for a random pokemon.'.format(ctx.message.author)
     await ctx.send(msg)
 
 
