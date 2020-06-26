@@ -1,6 +1,6 @@
 import os
 
-os_project_path = os.path.dirname(os.path.abspath(__file__))
+os_project_path = os.path.dirname(os.path.abspath(__file__)).replace("/", "\\")
 
 
 def generate_joe():
