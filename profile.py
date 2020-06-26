@@ -4,8 +4,7 @@ import json_api
 profile_keys = ["color", "bio", "emote", "anime", "pokemon", "game", "waifu", "main", "song"]
 
 def categorylist():
-    categorystring=", "
-    return categorystring.join(profile_keys)
+  return ", ".join(profile_keys)
 
 def profile(message):
     content = message.content
