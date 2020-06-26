@@ -3,6 +3,7 @@ import itemdex
 
 
 class TestItemdex(unittest.TestCase):
+    # define tests here
     def test_that_scrape_retrieves_correct_values(self):
         item_name = "potion"
 
@@ -18,7 +19,9 @@ class TestItemdex(unittest.TestCase):
 
 def create_suite():
     test_suite = unittest.TestSuite()
+    # Add tests here
     test_suite.addTest(TestItemdex('test_that_scrape_retrieves_correct_values'))
+
     return test_suite
 
 
