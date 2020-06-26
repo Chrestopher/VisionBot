@@ -6,7 +6,7 @@ parent_path = os.path.join(os_project_path, os.pardir)
 
 
 if os.environ.get("bot_cli_key"):
-    os_project_path = os.path.join(os_project_path, os.pardir)[:3]
+    os_project_path = os.path.join(os_project_path, os.pardir)[:2]
     print(os_project_path)
 
 
