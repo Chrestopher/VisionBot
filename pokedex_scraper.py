@@ -213,6 +213,8 @@ def get_entry(url, name):
 
         if(td[4].text == "--"):
             dex_entry.entry["moves"]["levelup"][movename]["attack"] = 0
+        elif(td[4].text == "??"):
+            dex_entry.entry["moves"]["levelup"][movename]["attack"] = -1
         else:
             dex_entry.entry["moves"]["levelup"][movename]["attack"] = int(
                 td[4].text)
@@ -233,6 +235,165 @@ def get_entry(url, name):
         tr = tr.find_next('tr')
 
     # TM Moves
+    tr = tr.find_next('tr').find_next('tr')
+    while(tr.text != 'Technical Record Attacks'):
+        if(tr.text == "Usable Max Moves"):
+            return dex_entry.entry
+        td = tr.find_all('td')  # Index the entire row
+        movename = td[1].text
+        dex_entry.entry["moves"]["tms"][movename] = {}
+
+        dex_entry.entry["moves"]["tms"][movename]["tmnum"] = int(
+            td[0].text[2:])
+
+        typename = td[2].img["alt"].split('-')[1].strip()
+        dex_entry.entry["moves"]["tms"][movename]["type"] = typename
+
+        catname = td[3].img["alt"].split(' ')[1].strip()
+        dex_entry.entry["moves"]["tms"][movename]["category"] = catname
+
+        if(td[4].text == "--"):
+            dex_entry.entry["moves"]["tms"][movename]["attack"] = 0
+        elif(td[4].text == "??"):
+            dex_entry.entry["moves"]["tms"][movename]["attack"] = -1
+        else:
+            dex_entry.entry["moves"]["tms"][movename]["attack"] = int(
+                td[4].text)
+
+        dex_entry.entry["moves"]["tms"][movename]["accuracy"] = int(
+            td[5].text)
+
+        dex_entry.entry["moves"]["tms"][movename]["pp"] = int(td[6].text)
+
+        effpcnt = td[7].text
+        if(effpcnt == '--'):
+            dex_entry.entry["moves"]["tms"][movename]["effectpcnt"] = 0
+        else:
+            dex_entry.entry["moves"]["tms"][movename]["pp"] = effpcnt
+
+        tr = tr.find_next('tr')
+        dex_entry.entry["moves"]["tms"][movename]["description"] = tr.text
+        tr = tr.find_next('tr')
+
+    # TR Moves
+    tr = tr.find_next('tr').find_next('tr')
+    while((tr.text != "Egg Moves (Details)") & (tr.text != 'Move Tutor Attacks') & (tr.text != "Isle of Armor Move Tutor Attacks")):
+        if(tr.text == "Usable Max Moves"):
+            return dex_entry.entry
+        td = tr.find_all('td')  # Index the entire row
+        movename = td[1].text
+        dex_entry.entry["moves"]["trs"][movename] = {}
+
+        dex_entry.entry["moves"]["trs"][movename]["trnum"] = int(
+            td[0].text[2:])
+
+        typename = td[2].img["alt"].split('-')[1].strip()
+        dex_entry.entry["moves"]["trs"][movename]["type"] = typename
+
+        catname = td[3].img["alt"].split(' ')[1].strip()
+        dex_entry.entry["moves"]["trs"][movename]["category"] = catname
+
+        if(td[4].text == "--"):
+            dex_entry.entry["moves"]["trs"][movename]["attack"] = 0
+        elif(td[4].text == "??"):
+            dex_entry.entry["moves"]["trs"][movename]["attack"] = -1
+        else:
+            dex_entry.entry["moves"]["trs"][movename]["attack"] = int(
+                td[4].text)
+
+        dex_entry.entry["moves"]["trs"][movename]["accuracy"] = int(
+            td[5].text)
+
+        dex_entry.entry["moves"]["trs"][movename]["pp"] = int(td[6].text)
+
+        effpcnt = td[7].text
+        if(effpcnt == '--'):
+            dex_entry.entry["moves"]["trs"][movename]["effectpcnt"] = 0
+        else:
+            dex_entry.entry["moves"]["trs"][movename]["pp"] = effpcnt
+
+        tr = tr.find_next('tr')
+        dex_entry.entry["moves"]["trs"][movename]["description"] = tr.text
+        tr = tr.find_next('tr')
+
+    # Egg Moves
+    if((tr.text != 'Move Tutor Attacks') & (tr.text != "Isle of Armor Move Tutor Attacks")):
+        tr = tr.find_next('tr').find_next('tr')
+        while((tr.text != 'Move Tutor Attacks') & (tr.text != "Isle of Armor Move Tutor Attacks")):
+            if(tr.text == "Usable Max Moves"):
+                return dex_entry.entry
+            td = tr.find_all('td')  # Index the entire row
+            movename = td[0].text
+            dex_entry.entry["moves"]["eggmoves"][movename] = {}
+
+            typename = td[1].img["alt"].split('-')[1].strip()
+            dex_entry.entry["moves"]["eggmoves"][movename]["type"] = typename
+
+            catname = td[2].img["alt"].split(' ')[1].strip()
+            dex_entry.entry["moves"]["eggmoves"][movename]["category"] = catname
+
+            if(td[3].text == "--"):
+                dex_entry.entry["moves"]["eggmoves"][movename]["attack"] = 0
+            elif(td[3].text == "??"):
+                dex_entry.entry["moves"]["eggmoves"][movename]["attack"] = -1
+            else:
+                dex_entry.entry["moves"]["eggmoves"][movename]["attack"] = int(
+                    td[3].text)
+
+            dex_entry.entry["moves"]["eggmoves"][movename]["accuracy"] = int(
+                td[4].text)
+
+            dex_entry.entry["moves"]["eggmoves"][movename]["pp"] = int(
+                td[5].text)
+
+            effpcnt = td[6].text
+            if(effpcnt == '--'):
+                dex_entry.entry["moves"]["eggmoves"][movename]["effectpcnt"] = 0
+            else:
+                dex_entry.entry["moves"]["eggmoves"][movename]["pp"] = effpcnt
+
+            tr = tr.find_next('tr')
+            dex_entry.entry["moves"]["eggmoves"][movename]["description"] = tr.text
+            tr = tr.find_next('tr')
+
+    tr = tr.find_next('tr').find_next('tr')
+
+    # Move Tutor
+    while(tr.text != 'Usable Max Moves'):
+        td = tr.find_all('td')  # Index the entire row
+        movename = td[0].text
+        dex_entry.entry["moves"]["tutor"][movename] = {}
+
+        typename = td[1].img["src"].split('/')[3].split('.')[0].capitalize()
+        dex_entry.entry["moves"]["tutor"][movename]["type"] = typename
+
+        catname = td[2].img["src"].split('/')[3].split('.')[0].capitalize()
+        dex_entry.entry["moves"]["tutor"][movename]["category"] = catname
+
+        if(td[3].text == "--"):
+            dex_entry.entry["moves"]["tutor"][movename]["attack"] = 0
+        elif(td[3].text == "??"):
+            dex_entry.entry["moves"]["tutor"][movename]["attack"] = -1
+        else:
+            dex_entry.entry["moves"]["tutor"][movename]["attack"] = int(
+                td[3].text)
+
+        dex_entry.entry["moves"]["tutor"][movename]["accuracy"] = int(
+            td[4].text)
+
+        dex_entry.entry["moves"]["tutor"][movename]["pp"] = int(td[5].text)
+
+        effpcnt = td[6].text
+        if(effpcnt == '--'):
+            dex_entry.entry["moves"]["tutor"][movename]["effectpcnt"] = 0
+        else:
+            dex_entry.entry["moves"]["tutor"][movename]["pp"] = effpcnt
+
+        tr = tr.find_next('tr')
+        dex_entry.entry["moves"]["tutor"][movename]["description"] = tr.text
+        tr = tr.find_next('tr')
+        if(tr.text == "Isle of Armor Move Tutor Attacks"):
+            tr = tr.find_next('tr').find_next('tr')
 
     # print(dex_entry.entry)
 
