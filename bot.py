@@ -43,8 +43,18 @@ async def credits_command(ctx):
 
 
 @bot.command(name="schedule")
-async def credits_command(ctx):
+async def schedule_command(ctx):
     await ctx.send(schedule.read_schedule())
+
+
+@bot.command(name="addevent")
+async def addevent_command(ctx, *args):
+    await ctx.send(schedule.add_event(args))
+
+
+@bot.command(name="removeevent")
+async def removeevent_command(ctx, *args):
+    await ctx.send(schedule.remove_event(args))
 
 
 @bot.command(name="itemdex")
@@ -65,22 +75,11 @@ async def profile_command(ctx, *args):
         await ctx.send(response)
 
 
-async def command_checker(message):
-    if message.content.startswith("!math"):
-        msg = custom_math.math(message.content)
+@bot.command(name="math")
+async def profile_command(ctx, *args):
+        msg = custom_math.math(args)
         if msg != "":
-            await message.channel.send(msg)
-        return
-
-    if message.content.startswith("!addevent"):
-        msg = schedule.add_event(message.content)
-        await message.channel.send(msg)
-        return
-
-    if message.content.startswith("!removeevent"):
-        msg = schedule.remove_event(message.content)
-        await message.channel.send(msg)
-        return
+            await ctx.send(msg)
 
 
 @bot.event

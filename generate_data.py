@@ -1,4 +1,5 @@
 import os
+import json
 
 os_project_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,7 +28,7 @@ def generate_pokemon():
 
 
 def generate_itemdex_list():
-    file_path = os.path.join(os_project_path, 'content/pokemon/itemdex/itemdex_dictionary.txt')
+    file_path = os.path.join(os_project_path, 'content/pokemon/itemdex/itemdex_list.txt')
     item_list = []
     with open(file_path, 'r', encoding="ISO-8859-1") as f:
         for x in f:
@@ -35,3 +36,8 @@ def generate_itemdex_list():
 
     return item_list
 
+
+def generate_itemdex_dictionary():
+    file_path = os.path.join(os_project_path, 'content/pokemon/itemdex/itemdex_data.json')
+    with open(file_path, 'r', encoding="ISO-8859-1") as f:
+        return json.load(f)
