@@ -8,6 +8,7 @@ import generate_data
 import profile
 import itemdex
 import num_util_functions
+import randpoke
 
 bot = commands.Bot(command_prefix="!")
 
@@ -65,6 +66,9 @@ async def itemdex_command(ctx, *args):
     elif type(response) is str:
         await ctx.send(response)
 
+@bot.command(name="randpoke")
+async def randpoke_command(ctx, *args):
+    await ctx.send(randpoke.get_rand_poke(args))
 
 @bot.command(name="profile")
 async def profile_command(ctx, *args):
@@ -80,6 +84,15 @@ async def profile_command(ctx, *args):
         msg = custom_math.math(args)
         if msg != "":
             await ctx.send(msg)
+
+    if message.content.startswith("!categories"):
+        msg="The categories for a profile are: "+profile.categorylist()
+        await message.channel.send(msg)
+        return
+    if message.content.startswith("!testrun"):
+        msg = "This command is meant for debugging and testing."
+        await message.channel.send(msg)
+        return
 
 
 @bot.event
