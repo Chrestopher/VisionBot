@@ -2,6 +2,8 @@ import discord
 import os
 import random
 from discord.ext import commands
+
+import randpoke
 import schedule
 import custom_math
 import generate_data
@@ -66,6 +68,11 @@ async def itemdex_command(ctx, *args):
         await ctx.send(response)
 
 
+@bot.command(name="randpoke")
+async def randpoke_command(ctx, *args):
+    await ctx.send(randpoke.get_rand_poke(args))
+
+
 @bot.command(name="profile")
 async def profile_command(ctx, *args):
     response = profile.profile(ctx, args)
@@ -76,10 +83,16 @@ async def profile_command(ctx, *args):
 
 
 @bot.command(name="math")
-async def profile_command(ctx, *args):
-        msg = custom_math.math(args)
-        if msg != "":
-            await ctx.send(msg)
+async def math_command(ctx, *args):
+    msg = custom_math.math(args)
+    if msg != "":
+        await ctx.send(msg)
+
+
+@bot.command(name="categories")
+async def categories_command(ctx):
+        msg="The categories for a profile are: "+profile.categorylist()
+        await ctx.send(msg)
 
 
 @bot.event
