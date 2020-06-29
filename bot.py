@@ -56,9 +56,11 @@ async def itemdex_command(ctx, *args):
     elif type(response) is str:
         await ctx.send(response)
 
+
 @bot.command(name="randpoke")
 async def randpoke_command(ctx, *args):
     await ctx.send(randpoke.get_rand_poke(args))
+
 
 @bot.command(name="profile")
 async def profile_command(ctx, *args):
@@ -67,6 +69,11 @@ async def profile_command(ctx, *args):
         await ctx.send(" ", embed=response)
     elif type(response) is str:
         await ctx.send(response)
+
+
+@bot.command(name="categories")
+async def categories_command(ctx):
+    await ctx.send("The possible profile categories are: "+profile.categorylist())
 
 
 async def command_checker(message):

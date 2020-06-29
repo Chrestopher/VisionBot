@@ -3,8 +3,10 @@ import json_api
 
 profile_categories = ["color", "bio", "emote", "anime", "pokemon", "game", "waifu", "main", "song"]
 
+
 def categorylist():
-  return ", ".join(profile_keys)
+  return ", ".join(profile_categories)
+
 
 def profile(ctx, args):
     context = ctx.message
