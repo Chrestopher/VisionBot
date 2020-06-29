@@ -97,7 +97,6 @@ async def command_checker(message):
 
 
 @bot.event
-
 async def on_message(message):
     if str(message.channel) in blacklisted_channels:
         return
