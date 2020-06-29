@@ -1,6 +1,4 @@
 import random
-
-
 import generate_data
 
 

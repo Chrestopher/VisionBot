@@ -35,7 +35,7 @@ def process_message(user, avatar_url, args):
             return update_account(user, category, value)
         else:
 
-            return "That category does not exist! Try one of these: " +category(list)
+            return "That category does not exist! Try one of these: " +categorylist()
     elif command == "create":
 
         return create_account(user)
