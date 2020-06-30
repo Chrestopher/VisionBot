@@ -74,11 +74,6 @@ async def randpoke_command(ctx, *args):
     await ctx.send(randpoke.get_rand_poke(args))
 
 
-@bot.command(name="randpoke")
-async def randpoke_command(ctx, *args):
-    await ctx.send(randpoke.get_rand_poke(args))
-
-
 @bot.command(name="profile")
 async def profile_command(ctx, *args):
     response = profile.profile(ctx, args)
