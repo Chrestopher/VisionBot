@@ -65,5 +65,5 @@ def build_item_embed(item_dict):
 
     embed.set_thumbnail(url=item_dict["item_image_url"])
     embed.add_field(name="Type", value=item_dict["item_type"], inline=False)
-    embed.set_footer(text="Created by VisionBot", icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
+    embed.set_footer(text="Created by VisionBot Itemdex", icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed

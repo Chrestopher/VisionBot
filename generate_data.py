@@ -39,5 +39,5 @@ def generate_itemdex_list():
 
 def generate_itemdex_dictionary():
     file_path = os.path.join(os_project_path, 'content/pokemon/itemdex/itemdex_data.json')
-    with open(file_path, 'r', encoding="ISO-8859-1") as f:
+    with open(file_path, 'r', encoding="utf-8-sig") as f:
         return json.load(f)
