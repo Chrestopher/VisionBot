@@ -11,7 +11,7 @@ import profile
 import itemdex
 import num_util_functions
 import randpoke
-
+import help_command
 bot = commands.Bot(command_prefix="!")
 
 # Global Variables
@@ -99,10 +99,12 @@ async def math_command(ctx, *args):
         await ctx.send(msg)
 
 
-@bot.command(name="categories")
-async def categories_command(ctx):
-    msg = "The categories for a profile are: " + profile.categorylist()
-    await ctx.send(msg)
+@bot.command(name="tester")
+async def tester_command(ctx):
+    response=help_command.start_h4elp_command()
+    message= await ctx.send(" ", embed=response)
+    await message.add_reaction("⬅️")
+    await message.add_reaction("➡️")
 
 @bot.event
 async def on_message(message):
