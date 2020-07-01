@@ -1,6 +1,8 @@
 import discord
 import os
 import random
+
+from discord import Reaction, User
 from discord.ext import commands
 import schedule
 import custom_math
@@ -21,8 +23,8 @@ joe_messages = generate_data.generate_joe()
 
 @bot.command(name="visionbot")
 async def visionbot_command(ctx):
-    msg = 'Hello {0.author.mention}! I am VisionBot. I post things that Vision may or may not post. @me for random ' \
-          'message or !randpoke for a random pokemon.'.format(ctx.message.author)
+    msg = 'Hello {}! I am VisionBot. I post things that Vision may or may not post. @me for random ' \
+          'message or !help for a list of commands'.format(ctx.message.author.mention)
     await ctx.send(msg)
 
 
@@ -62,7 +64,9 @@ async def removeevent_command(ctx, *args):
 async def itemdex_command(ctx, *args):
     response = itemdex.get_item(args)
     if type(response) is discord.embeds.Embed:
-        await ctx.send(" ", embed=response)
+        message = await ctx.send(" ", embed=response)
+        # await message.add_reaction("⬅️")
+        # await message.add_reaction("➡️")
     elif type(response) is str:
         await ctx.send(response)
 
@@ -124,6 +128,41 @@ async def on_message(message):
         return
 
     await bot.process_commands(message)
+
+
+@bot.event
+async def on_reaction_add(reaction, user):
+    # if reaction is from the bot
+    if user == bot.user:
+        return
+
+    # if reaction message contains an embed
+    if len(reaction.message.embeds) > 0:
+        pass
+    else:
+        return
+
+    emoji = reaction.emoji
+    direction = 0
+
+    # Figure out which emoji flips the page in which direction
+    if emoji == "➡️":
+        direction = 1
+    elif emoji == "⬅️":
+        direction = -1
+    else:
+        print("damn")
+        return
+
+    print(direction)
+
+    # Use the direction to figure out which direction we want to flip the embed and which type of embed to process
+
+    test_item = {"item_name": "Potion", "item_description": "Heals a Pokémon by 20HP",
+                     "item_image_url": "https://serebii.net/itemdex/sprites/pgl/potion.png", "item_type": "Recovery"}
+
+    # Get the embed and edit
+    await reaction.message.edit(embed=itemdex.build_item_embed(test_item))
 
 
 @bot.event
