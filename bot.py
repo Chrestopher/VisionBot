@@ -44,8 +44,18 @@ async def credits_command(ctx):
 
 
 @bot.command(name="schedule")
-async def credits_command(ctx):
+async def schedule_command(ctx):
     await ctx.send(schedule.read_schedule())
+
+
+@bot.command(name="addevent")
+async def addevent_command(ctx, *args):
+    await ctx.send(schedule.add_event(args))
+
+
+@bot.command(name="removeevent")
+async def removeevent_command(ctx, *args):
+    await ctx.send(schedule.remove_event(args))
 
 
 @bot.command(name="itemdex")
@@ -71,37 +81,24 @@ async def profile_command(ctx, *args):
         await ctx.send(response)
 
 
+
 @bot.command(name="categories")
 async def categories_command(ctx):
     await ctx.send("The possible profile categories are: "+profile.categorylist())
 
 
-async def command_checker(message):
-    if message.content.startswith("!math"):
-        msg = custom_math.math(message.content)
-        if msg != "":
-            await message.channel.send(msg)
-        return
 
-    if message.content.startswith("!addevent"):
-        msg = schedule.add_event(message.content)
-        await message.channel.send(msg)
-        return
+@bot.command(name="math")
+async def math_command(ctx, *args):
+    msg = custom_math.math(args)
+    if msg != "":
+        await ctx.send(msg)
 
-    if message.content.startswith("!removeevent"):
-        msg = schedule.remove_event(message.content)
-        await message.channel.send(msg)
-        return
 
-    if message.content.startswith("!categories"):
-        msg="The categories for a profile are: "+profile.categorylist()
-        await message.channel.send(msg)
-        return
-    if message.content.startswith("!testrun"):
-        msg = "This command is meant for debugging and testing."
-        await message.channel.send(msg)
-        return
-
+@bot.command(name="categories")
+async def categories_command(ctx):
+    msg = "The categories for a profile are: " + profile.categorylist()
+    await ctx.send(msg)
 
 @bot.event
 async def on_message(message):

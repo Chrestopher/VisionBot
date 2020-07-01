@@ -53,7 +53,6 @@ beautycup
 beedrillite
 bellsproutcandy
 belueberry
-berry
 berryjuice
 berrypots
 berrypouch
@@ -772,7 +771,7 @@ pokemondesk
 pokeradar
 poketable
 poketoy
-pokédoll
+pokï¿½doll
 polishedmudball
 poliwagcandy
 poliwagdoll

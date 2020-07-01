@@ -7,7 +7,6 @@ profile_categories = ["color", "bio", "emote", "anime", "pokemon", "game", "waif
 def categorylist():
   return ", ".join(profile_categories)
 
-
 def profile(ctx, args):
     context = ctx.message
     name = context.author.name
@@ -36,9 +35,8 @@ def process_message(user, avatar_url, args):
             print(value)
             return update_account(user, category, value)
         else:
-
             return "That category does not exist! Try one of these: " +categorylist()
-    elif command == "create":
+
 
         return create_account(user)
     elif command == "view":
