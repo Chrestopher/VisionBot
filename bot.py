@@ -67,8 +67,8 @@ async def itemdex_command(ctx, *args):
     response = itemdex.get_item(args)
     if type(response) is discord.embeds.Embed:
         message = await ctx.send(" ", embed=response)
-        await message.add_reaction("⬅️")
-        await message.add_reaction("➡️")
+        # await message.add_reaction("⬅️")
+        # await message.add_reaction("➡️")
     elif type(response) is str:
         await ctx.send(response)
 
