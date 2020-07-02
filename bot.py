@@ -152,6 +152,7 @@ async def on_reaction_add(reaction, user):
     else:
         return
 
+
 @bot.event
 async def on_ready():
     print('Logged in as')
