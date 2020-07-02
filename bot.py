@@ -1,7 +1,6 @@
 import discord
 import os
 import random
-
 from discord import Reaction, User
 from discord.ext import commands
 import schedule
@@ -12,6 +11,7 @@ import itemdex
 import num_util_functions
 import randpoke
 import help_command
+import embed_checker
 bot = commands.Bot(command_prefix="!")
 
 # Global Variables
@@ -98,10 +98,20 @@ async def math_command(ctx, *args):
     if msg != "":
         await ctx.send(msg)
 
+@bot.command(name="simonsays")
+async def simonsays_command(ctx,*args):
+    msg= " ".join(args)
+    await ctx.send(msg)
 
-@bot.command(name="tester")
-async def tester_command(ctx):
-    response=help_command.start_h4elp_command()
+@bot.command(name="commands")
+async def tester_command(ctx, *args):
+    if len(args)==0:
+        response=help_command.start_help_command()
+    elif args[0].isdigit() and 3 >= int(args[0]) >= 1:
+        response=help_command.start_help_command_at_page(int(args[0]))
+    else:
+        await ctx.send("This page does not exist!")
+        return
     message= await ctx.send(" ", embed=response)
     await message.add_reaction("⬅️")
     await message.add_reaction("➡️")
@@ -133,39 +143,14 @@ async def on_message(message):
 
 
 @bot.event
+
 async def on_reaction_add(reaction, user):
-    # if reaction is from the bot
     if user == bot.user:
         return
-
-    # if reaction message contains an embed
     if len(reaction.message.embeds) > 0:
-        pass
+        await reaction.message.edit(embed=embed_checker.embedpageswitch(reaction,reaction.message.embeds[0]))
     else:
         return
-
-    emoji = reaction.emoji
-    direction = 0
-
-    # Figure out which emoji flips the page in which direction
-    if emoji == "➡️":
-        direction = 1
-    elif emoji == "⬅️":
-        direction = -1
-    else:
-        print("damn")
-        return
-
-    print(direction)
-
-    # Use the direction to figure out which direction we want to flip the embed and which type of embed to process
-
-    test_item = {"item_name": "Potion", "item_description": "Heals a Pokémon by 20HP",
-                     "item_image_url": "https://serebii.net/itemdex/sprites/pgl/potion.png", "item_type": "Recovery"}
-
-    # Get the embed and edit
-    await reaction.message.edit(embed=itemdex.build_item_embed(test_item))
-
 
 @bot.event
 async def on_ready():
