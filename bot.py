@@ -158,7 +158,7 @@ async def on_reaction_add(reaction, user):
                      "item_image_url": "https://serebii.net/itemdex/sprites/pgl/potion.png", "item_type": "Recovery"}
 
     # Get the embed and edit
-    await reaction.message.edit(embed=itemdex.build_item_embed(test_item))
+    # await reaction.message.edit(embed=itemdex.build_item_embed(test_item))
 
 
 @bot.event
