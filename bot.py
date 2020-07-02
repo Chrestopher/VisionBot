@@ -104,7 +104,7 @@ async def simonsays_command(ctx,*args):
     await ctx.send(msg)
 
 @bot.command(name="commands")
-async def tester_command(ctx, *args):
+async def commands_command(ctx, *args):
     if len(args)==0:
         response=help_command.start_help_command()
     elif args[0].isdigit() and 3 >= int(args[0]) >= 1:
@@ -149,8 +149,7 @@ async def on_reaction_add(reaction, user):
         return
     if len(reaction.message.embeds) > 0:
         await reaction.message.edit(embed=embed_checker.embedpageswitch(reaction,reaction.message.embeds[0]))
-    else:
-        return
+    return
 
 
 @bot.event
