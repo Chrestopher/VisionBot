@@ -1,11 +1,8 @@
 import discord
 import os
 import random
-
 from discord import Reaction, User
 from discord.ext import commands
-
-import randpoke
 import schedule
 import custom_math
 import generate_data
@@ -13,6 +10,8 @@ import profile
 import itemdex
 import num_util_functions
 import randpoke
+import help_command
+import embed_page_handler
 
 bot = commands.Bot(command_prefix="!")
 
@@ -87,6 +86,11 @@ async def profile_command(ctx, *args):
         await ctx.send(response)
 
 
+@bot.command(name="categories")
+async def categories_command(ctx):
+    await ctx.send("The possible profile categories are: " + profile.category_list())
+
+
 @bot.command(name="math")
 async def math_command(ctx, *args):
     msg = custom_math.math(args)
@@ -94,10 +98,24 @@ async def math_command(ctx, *args):
         await ctx.send(msg)
 
 
-@bot.command(name="categories")
-async def categories_command(ctx):
-    msg = "The categories for a profile are: " + profile.categorylist()
+@bot.command(name="simonsays")
+async def simonsays_command(ctx, *args):
+    msg = " ".join(args)
     await ctx.send(msg)
+
+
+@bot.command(name="commands")
+async def commands_command(ctx, *args):
+    if len(args) == 0:
+        response = help_command.start_help_command()
+    elif args[0].isdigit() and 3 >= int(args[0]) >= 1:
+        response = help_command.start_help_command_at_page(int(args[0]))
+    else:
+        await ctx.send("This page does not exist!")
+        return
+    message = await ctx.send(" ", embed=response)
+    await message.add_reaction("⬅️")
+    await message.add_reaction("➡️")
 
 
 @bot.event
@@ -128,37 +146,12 @@ async def on_message(message):
 
 @bot.event
 async def on_reaction_add(reaction, user):
-    # if reaction is from the bot
     if user == bot.user:
         return
-
-    # if reaction message contains an embed
     if len(reaction.message.embeds) > 0:
-        pass
-    else:
-        return
-
-    emoji = reaction.emoji
-    direction = 0
-
-    # Figure out which emoji flips the page in which direction
-    if emoji == "➡️":
-        direction = 1
-    elif emoji == "⬅️":
-        direction = -1
-    else:
-        print("damn")
-        return
-
-    print(direction)
-
-    # Use the direction to figure out which direction we want to flip the embed and which type of embed to process
-
-    test_item = {"item_name": "Potion", "item_description": "Heals a Pokémon by 20HP",
-                     "item_image_url": "https://serebii.net/itemdex/sprites/pgl/potion.png", "item_type": "Recovery"}
-
-    # Get the embed and edit
-    # await reaction.message.edit(embed=itemdex.build_item_embed(test_item))
+        embed=embed_page_handler.page_flip_handler(reaction, reaction.message.embeds[0])
+        await reaction.message.edit(embed=embed)
+    return
 
 
 @bot.event
