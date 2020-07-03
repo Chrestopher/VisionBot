@@ -1,12 +1,9 @@
 Bulbasaur
-Ivysaur
-Venusaur
-Charmander
-Charmeleon
+Shelmet
+Froslass
+Lucario
 Charizard
 Squirtle
-Wartortle
-Blastoise
-Caterpie
-Metapod
 Butterfree
+Vulpix
+Diggersby
