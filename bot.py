@@ -8,6 +8,7 @@ import custom_math
 import generate_data
 import profile
 import itemdex
+import pokedex
 import num_util_functions
 import randpoke
 import help_command
@@ -64,6 +65,17 @@ async def removeevent_command(ctx, *args):
 @bot.command(name="itemdex")
 async def itemdex_command(ctx, *args):
     response = itemdex.get_item(args)
+    if type(response) is discord.embeds.Embed:
+        message = await ctx.send(" ", embed=response)
+        # await message.add_reaction("⬅️")
+        # await message.add_reaction("➡️")
+    elif type(response) is str:
+        await ctx.send(response)
+
+
+@bot.command(name="pokedex")
+async def pokedex_command(ctx, *args):
+    response = pokedex.get_pokemon(args)
     if type(response) is discord.embeds.Embed:
         message = await ctx.send(" ", embed=response)
         # await message.add_reaction("⬅️")

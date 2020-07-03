@@ -41,3 +41,9 @@ def generate_itemdex_dictionary():
     file_path = os.path.join(os_project_path, 'content/pokemon/itemdex/itemdex_data.json')
     with open(file_path, 'r', encoding="utf-8-sig") as f:
         return json.load(f)
+
+
+def generate_pokedex_dictionary():
+    file_path = os.path.join(os_project_path, 'pokemon.json')
+    with open(file_path, 'r', encoding="utf-8-sig") as f:
+        return json.load(f)
