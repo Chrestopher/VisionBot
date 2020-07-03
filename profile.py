@@ -1,38 +1,44 @@
 import discord
 import json_api
 
-profile_keys = ["color", "bio", "emote", "anime", "pokemon", "game", "waifu", "main", "song"]
+profile_categories = ["color", "bio", "emote", "anime", "pokemon", "game", "waifu", "main", "song"]
 
 
-def profile(message):
-    content = message.content
-    name = message.author.name
-    descriptor = message.author.discriminator
+def category_list():
+    return ", ".join(profile_categories)
+
+def profile(ctx, args):
+    context = ctx.message
+    name = context.author.name
+    descriptor = context.author.discriminator
     user = name + descriptor
-    avatar_url = message.author.avatar_url
+    avatar_url = context.author.avatar_url
     print(avatar_url)
-    print(message.author)
+    print(ctx.author)
 
-    return process_message(user, content, avatar_url)
+    return process_message(user, avatar_url, args)
 
 
-def process_message(user, content, avatar_url):
-    content = content.strip()
-    content = content[9:]
-    content_splitted = content.split(" ")
+def process_message(user, avatar_url, args):
+    if len(args) is 0:
+        return "Update command missing parameters: !profile update {category} {value}"
+    command = args[0]
 
-    if content_splitted[0] == "update":
-        if content_splitted[1] in profile_keys:
-            param = content_splitted[1]
-            del content_splitted[0]
-            del content_splitted[0]
-            value = " ".join(content_splitted)
-            return update_account(user, param, value)
+    if command == "update":
+        if len(args) != 3:
+            return "Update command missing parameters: !profile update {category} {value}"
+        category = args[1]
+        if category in profile_categories:
+            del command
+            value = " ".join(args[2:])
+            print(category)
+            print(value)
+            return update_account(user, category, value)
         else:
-            return "That category is not on your profile!"
-    elif content_splitted[0] == "create":
+            return "That category does not exist! Try one of these: " + category_list()
+    elif command == "create":
         return create_account(user)
-    elif content_splitted[0] == "view":
+    elif command == "view":
         return view_account(user, avatar_url)
     else:
         return "That command does not exist!"

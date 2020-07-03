@@ -1,30 +1,24 @@
-def math(content):
+def math(args):
     number_list = []
-    content = content.strip()
-    content = content[6:]
-    content = content.split(" ")
-    operation = ""
-    if len(content) > 3:
-        return "Sorry, im only programmed to do basic math. Idk go use a real calculator instead of this shabby one that Chres put on my system lol"
-
-    if content[1] and content[1].isnumeric():
+    if len(args) is not 3:
         return "Please put your numbers in the correct order: number operator number"
 
-    for item in content:
-        if item.isnumeric():
-            number_list.append(int(item))
-        elif item in ["*", "+", "-", "/"]:
-            operation = item
-        else:
-            return "Sorry, that doesn't look like math. Please put your numbers in the correct order: number operator number"
+    first_number = args[0]
+    operation = args[1]
+    second_number = args[2]
+
+    if (not first_number.isnumeric()) or (not second_number.isnumeric()):
+        return "Please use numbers"
 
     if operation == "*":
-        return str(number_list[0] * number_list[1])
+        return str(int(args[0]) * int(args[2]))
     elif operation == "+":
-        return str(number_list[0] + number_list[1])
+        return str(int(args[0]) + int(args[2]))
     elif operation == "-":
-        return str(number_list[0] - number_list[1])
+        return str(int(args[0]) - int(args[2]))
     elif operation == "/":
-        return str(number_list[0] / number_list[1])
+        return str(str(int(args[0]) / int(args[2])))
+    elif operation == "^":
+        return str(str(int(args[0]) ** int(args[2])))
     else:
-        return "Please put your numbers in the correct order: number operator number"
+        return "Please use a supported operation: * - + /"

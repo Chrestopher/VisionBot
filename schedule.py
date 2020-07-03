@@ -51,20 +51,16 @@ def read_schedule():
     return title
 
 
-def add_event(content):
-    content = content.strip()
-    content = content[10:]
-    content = content.split(" ")
-
-    event_name = content[0]
-    event_month = content[1]
+def add_event(args):
+    event_name = args[0]
+    event_month = args[1]
     if event_month not in month_word_to_number.keys() and int(event_month) not in month_number_to_word.keys():
         return "The event has an invalid date!"
     if not event_month.isnumeric() and event_month in month_word_to_number.keys():
         event_month = str(month_word_to_number[event_month])
 
-    event_day = content[2]
-    event_time = content[3]
+    event_day = args[2]
+    event_time = args[3]
 
     schedule = load_json()
     if event_name in schedule["schedule"].keys():
@@ -79,9 +75,8 @@ def add_event(content):
         return "Added event \"" + event_name + "\"!"
 
 
-def remove_event(content):
-    content = content.strip()
-    event_name = content[13:]
+def remove_event(args):
+    event_name = args[0]
     schedule = load_json()
     if event_name in schedule["schedule"]:
         del schedule["schedule"][event_name]
