@@ -11,7 +11,8 @@ import itemdex
 import num_util_functions
 import randpoke
 import help_command
-import embed_checker
+import embed_page_handler
+
 bot = commands.Bot(command_prefix="!")
 
 # Global Variables
@@ -85,11 +86,9 @@ async def profile_command(ctx, *args):
         await ctx.send(response)
 
 
-
 @bot.command(name="categories")
 async def categories_command(ctx):
-    await ctx.send("The possible profile categories are: "+profile.categorylist())
-
+    await ctx.send("The possible profile categories are: " + profile.category_list())
 
 
 @bot.command(name="math")
@@ -98,23 +97,26 @@ async def math_command(ctx, *args):
     if msg != "":
         await ctx.send(msg)
 
+
 @bot.command(name="simonsays")
-async def simonsays_command(ctx,*args):
-    msg= " ".join(args)
+async def simonsays_command(ctx, *args):
+    msg = " ".join(args)
     await ctx.send(msg)
+
 
 @bot.command(name="commands")
 async def commands_command(ctx, *args):
-    if len(args)==0:
-        response=help_command.start_help_command()
+    if len(args) == 0:
+        response = help_command.start_help_command()
     elif args[0].isdigit() and 3 >= int(args[0]) >= 1:
-        response=help_command.start_help_command_at_page(int(args[0]))
+        response = help_command.start_help_command_at_page(int(args[0]))
     else:
         await ctx.send("This page does not exist!")
         return
-    message= await ctx.send(" ", embed=response)
+    message = await ctx.send(" ", embed=response)
     await message.add_reaction("⬅️")
     await message.add_reaction("➡️")
+
 
 @bot.event
 async def on_message(message):
@@ -143,12 +145,12 @@ async def on_message(message):
 
 
 @bot.event
-
 async def on_reaction_add(reaction, user):
     if user == bot.user:
         return
     if len(reaction.message.embeds) > 0:
-        await reaction.message.edit(embed=embed_checker.embedpageswitch(reaction,reaction.message.embeds[0]))
+        embed=embed_page_handler.page_flip_handler(reaction, reaction.message.embeds[0])
+        await reaction.message.edit(embed=embed)
     return
 
 

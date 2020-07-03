@@ -4,8 +4,8 @@ import json_api
 profile_categories = ["color", "bio", "emote", "anime", "pokemon", "game", "waifu", "main", "song"]
 
 
-def categorylist():
-  return ", ".join(profile_categories)
+def category_list():
+    return ", ".join(profile_categories)
 
 def profile(ctx, args):
     context = ctx.message
@@ -35,9 +35,8 @@ def process_message(user, avatar_url, args):
             print(value)
             return update_account(user, category, value)
         else:
-            return "That category does not exist! Try one of these: " +categorylist()
-
-
+            return "That category does not exist! Try one of these: " + category_list()
+    elif command == "create":
         return create_account(user)
     elif command == "view":
         return view_account(user, avatar_url)

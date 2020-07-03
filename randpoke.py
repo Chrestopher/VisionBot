@@ -10,7 +10,6 @@ gen_dict = {"1": [0, 170], "2": [171, 270], "3": [271, 407], "4": [408, 514], "5
 
 
 def get_rand_poke(args):
-
     if len(args) == 0 or args[0] not in gen_dict:
         rand_poke_number = random.randint(0, 911)
         return pokemon_list[rand_poke_number]
