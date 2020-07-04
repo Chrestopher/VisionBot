@@ -148,7 +148,7 @@ def get_entry(url, name):
                 dex_entry.entry["abilities"][name] = {}
                 dex_entry.entry["abilities"][name]["name"] = name
                 dex_entry.entry["abilities"][name]["description"] = desc
-                dex_entry.entry["abilities"][name]["HA"] = "true"
+                dex_entry.entry["abilities"][name]["HA"] = True
             else:
                 ability_split = ability.split(':')
                 name = ability_split[0]
@@ -156,7 +156,7 @@ def get_entry(url, name):
                 dex_entry.entry["abilities"][name] = {}
                 dex_entry.entry["abilities"][name]["name"] = name
                 dex_entry.entry["abilities"][name]["description"] = desc
-                dex_entry.entry["abilities"][name]["HA"] = "false"
+                dex_entry.entry["abilities"][name]["HA"] = False
 
     # EV
     tr = tr.find_next('tr').find_next('tr')
