@@ -78,8 +78,8 @@ async def pokedex_command(ctx, *args):
     response = pokedex.get_pokemon(args)
     if type(response) is discord.embeds.Embed:
         message = await ctx.send(" ", embed=response)
-        # await message.add_reaction("⬅️")
-        # await message.add_reaction("➡️")
+        await message.add_reaction("⬅️")
+        await message.add_reaction("➡️")
     elif type(response) is str:
         await ctx.send(response)
 
@@ -161,7 +161,7 @@ async def on_reaction_add(reaction, user):
     if user == bot.user:
         return
     if len(reaction.message.embeds) > 0:
-        embed=embed_page_handler.page_flip_handler(reaction, reaction.message.embeds[0])
+        embed = embed_page_handler.page_flip_handler(reaction, reaction.message.embeds[0])
         await reaction.message.edit(embed=embed)
     return
 
