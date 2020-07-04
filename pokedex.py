@@ -62,7 +62,7 @@ def build_pokemon_summary_embed(pokemon_name):
     embed.set_thumbnail(url=pokemon["image"])
     embed.add_field(name="Height", value=num_util_functions.convert_meters_to_feet_inches(pokemon["properties"]["height"][:-1]), inline=True)
     embed.add_field(name="Weight", value=num_util_functions.convert_kilograms_to_lbs(pokemon["properties"]["weight"][:-2]), inline=True)
-    embed.add_field(name="Type", value="/".join([pokemon["properties"]["type1"], pokemon["properties"]["type2"]]), inline=False)
+    embed.add_field(name="Type", value=display_type(pokemon["properties"]["type1"], pokemon["properties"]["type2"]), inline=False)
     embed.add_field(name="Abilities:", value=build_abilities(pokemon["abilities"]), inline=False)
     embed.set_footer(text="Created by VisionBot Pokedex (1/2)", icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed
@@ -93,11 +93,18 @@ def build_abilities(abilities):
 
 
 def build_stats(stats):
-    stat_string_list = ["HP:         " + stats["hp"] + "\n", "Att:  " + stats["att"] + "\n", "Def:  " + stats["def"] + "\n",
-                        "SpA: " + stats["spa"] + "\n", "SpD: " + stats["spd"] + "\n", "Spe:  " + stats["spe"] + "\n\n",
-                        "Total: " + stats["total"]]
+    stat_string_list = ["HP:  **" + stats["hp"] + "**\n", "Att:  **" + stats["att"] + "**\n", "Def:  **" + stats["def"] + "**\n",
+                        "SpA: **" + stats["spa"] + "**\n", "SpD: **" + stats["spd"] + "**\n", "Spe:  **" + stats["spe"] + "**\n\n",
+                        "Total: **" + stats["total"] + "**"]
     return "".join(stat_string_list)
 
 
 def display_link(pokemon_name):
     return "[Serebii](" + pokedex_url_prefix + pokemon_name.lower() + pokedex_url_postfix + ")"
+
+
+def display_type(type1, type2):
+    if type2 == "":
+        return type1
+    else:
+        return type1 + "/" + type2
