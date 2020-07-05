@@ -18,7 +18,6 @@ def profile(ctx, args):
 
     return process_message(user, avatar_url, args)
 
-
 def process_message(user, avatar_url, args):
     if len(args) is 0:
         return "Update command missing parameters: !profile update {category} {value}"
