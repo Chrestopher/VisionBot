@@ -1,8 +1,5 @@
 import help_command
-<<<<<<< HEAD
-=======
 import pokedex
->>>>>>> b07638124eca26046f9929c70d140dc5a67ffa7d
 
 
 def page_flip_handler(reaction, embed):
@@ -17,23 +14,9 @@ def page_flip_handler(reaction, embed):
 
 def page_flip_commands(embed, direction):
     if "Help" in embed.title:
-<<<<<<< HEAD
-        current_page = int(embed.footer.text.split("/")[0])
-        if direction == 1 and current_page != 3:
-            return help_command.helppages[current_page + 1]
-        if direction == -1 and current_page != 1:
-            return help_command.helppages[current_page - 1]
-        else:
-            if direction == 1:
-                return help_command.helppages[1]
-            elif direction == -1:
-                return help_command.helppages[3]
-            else:
-                print("Direction should be 1 or -1")
+
     else:
         pass
-    print(type(embed.title))
-=======
         return handle_commands_embed(embed, direction)
     elif "Pokedex" in embed.footer.text:
         return handle_pokedex_embed(embed, direction)
@@ -71,4 +54,7 @@ def handle_pokedex_embed(embed, direction):
     elif next_page == 2:
         return pokedex.build_pokemon_stats_embed(pokemon_name)
 
+<<<<<<< HEAD
+>>>>>>> b07638124eca26046f9929c70d140dc5a67ffa7d
+=======
 >>>>>>> b07638124eca26046f9929c70d140dc5a67ffa7d

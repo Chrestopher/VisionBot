@@ -161,11 +161,7 @@ async def on_reaction_add(reaction, user):
     if user == bot.user:
         return
     if len(reaction.message.embeds) > 0:
-<<<<<<< HEAD
-        embed=embed_page_handler.page_flip_handler(reaction, reaction.message.embeds[0])
-=======
         embed = embed_page_handler.page_flip_handler(reaction, reaction.message.embeds[0])
->>>>>>> b07638124eca26046f9929c70d140dc5a67ffa7d
         await reaction.message.edit(embed=embed)
     return
 
