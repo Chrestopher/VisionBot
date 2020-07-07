@@ -15,7 +15,6 @@ def profile(ctx, args):
     avatar_url = context.author.avatar_url
     print(avatar_url)
     print(ctx.author)
-
     return process_message(user, avatar_url, args)
 
 def process_message(user, avatar_url, args):
