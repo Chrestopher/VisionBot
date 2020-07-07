@@ -7,6 +7,7 @@ profile_categories = ["color", "bio", "emote", "anime", "pokemon", "game", "waif
 def category_list():
     return ", ".join(profile_categories)
 
+
 def profile(ctx, args):
     context = ctx.message
     name = context.author.name
@@ -16,6 +17,7 @@ def profile(ctx, args):
     print(avatar_url)
     print(ctx.author)
     return process_message(user, avatar_url, args)
+
 
 def process_message(user, avatar_url, args):
     if len(args) is 0:
