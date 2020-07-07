@@ -2,13 +2,13 @@ def math(args):
     number_list = []
     if len(args) is not 3:
         return "Please put your numbers in the correct order: number operator number"
+    try:
+        first_number = int(args[0])
+        second_number = int(args[2])
+    except ValueError:
+        return "Please use real numbers."
+    operation= args[1]
 
-    first_number = args[0]
-    operation = args[1]
-    second_number = args[2]
-
-    if (not first_number.isnumeric()) or (not second_number.isnumeric()):
-        return "Please use numbers"
 
     if operation == "*":
         return str(int(args[0]) * int(args[2]))
