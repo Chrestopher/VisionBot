@@ -38,8 +38,8 @@ def handle_commands_embed(embed, direction):
 
 def handle_pokedex_embed(embed, direction):
     pokemon_name = embed.title
-    pokedex_page_mapper_1 = {"1": 2, "2": 1}
-    pokedex_page_mapper_n1 = {"1": 2, "2": 1}
+    pokedex_page_mapper_1 = {"1": 2, "2": 3, "3": 1}
+    pokedex_page_mapper_n1 = {"1": 3, "3": 2, "2": 1}
     page = embed.footer.text[30]
     if direction == 1:
         next_page = pokedex_page_mapper_1[page]
@@ -50,4 +50,7 @@ def handle_pokedex_embed(embed, direction):
         return pokedex.build_pokemon_summary_embed(pokemon_name)
     elif next_page == 2:
         return pokedex.build_pokemon_stats_embed(pokemon_name)
+    elif next_page == 3:
+        return pokedex.build_pokemon_weaknesses_resists_embed(pokemon_name)
+
 
