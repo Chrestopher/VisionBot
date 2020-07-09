@@ -54,7 +54,7 @@ def scrape_move(item_name):
     else:
         movesdict['secondary_effect'] = ' '.join(target_block[1].text.rsplit())
         movesdict['max_move'] = target_block[2].find('u').text
-scrape_move('heatcrash')
+
 
 def dump_moves():
     moves_dict={}
@@ -65,5 +65,5 @@ def dump_moves():
             moves_dict_entry=scrape_move(line)
             moves_dict[line]=moves_dict_entry
     print(moves_dict)
-#dump_moves()
+dump_moves()
 print(moves_list_manual_fix)
