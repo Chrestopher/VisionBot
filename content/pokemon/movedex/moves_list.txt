@@ -88,7 +88,6 @@ Burn Up
 Burning Jealousy
 Buzzy Buzz
 Calm Mind
-Camouflage
 Captivate
 Catastropika
 Celebrate
@@ -234,7 +233,6 @@ Flash
 Flash Cannon
 Flatter
 Fleur Cannon
-Fling
 Flip Turn
 Floaty Fall
 Floral Healing
@@ -261,39 +259,6 @@ Fury Swipes
 Fusion Bolt
 Fusion Flare
 Future Sight
-G-Max Befuddle
-G-Max Cannonade
-G-Max Centiferno
-G-Max Chi Strike
-G-Max Cuddle
-G-Max Depletion
-G-Max Drum Solo
-G-Max Finale
-G-Max Fireball
-G-Max Foam Burst
-G-Max Gold Rush
-G-Max Gravitas
-G-Max Hydrosnipe
-G-Max Malodor
-G-Max Meltdown
-G-Max One Blow
-G-Max Rapid Flow
-G-Max Replenish
-G-Max Resonance
-G-Max Sandblast
-G-Max Smite
-G-Max Snooze
-G-Max Steelsurge
-G-Max Stonesurge
-G-Max Stun Shock
-G-Max Sweetness
-G-Max Tartness
-G-Max Terror
-G-Max Vine Lash
-G-Max Volcalith
-G-Max Volt Crash
-G-Max Wildfire
-G-Max Wind Rage
 Gastro Acid
 Gear Grind
 Gear Up
@@ -490,7 +455,6 @@ Muddy Water
 Multi-Attack
 Mystical Fire
 Nasty Plot
-Natural Gift
 Nature Power
 Nature's Madness
 Needle Arm
