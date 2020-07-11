@@ -1,6 +1,6 @@
 import help_command
 import pokedex
-
+import movedex
 
 def page_flip_handler(reaction, embed):
     emoji = reaction.emoji
@@ -17,6 +17,8 @@ def page_flip_commands(embed, direction):
         return handle_commands_embed(embed, direction)
     elif "Pokedex" in embed.footer.text:
         return handle_pokedex_embed(embed, direction)
+    elif "Movedex" in embed.footer.text:
+        return handle_movedex_embed(embed,direction)
     else:
         return "Not a valid embed"
 
@@ -52,5 +54,20 @@ def handle_pokedex_embed(embed, direction):
         return pokedex.build_pokemon_stats_embed(pokemon_name)
     elif next_page == 3:
         return pokedex.build_pokemon_weaknesses_resists_embed(pokemon_name)
+
+
+def handle_movedex_embed(embed,direction):
+    move_name=embed.title
+    page=embed.footer.text[32]
+    if direction== 1:
+        if page=='1':
+            return movedex.build_embed_2(move_name)
+        elif page== '2':
+            return movedex.build_embed(move_name)
+    if direction== -1:
+        if page=='1':
+            return movedex.build_embed_2(move_name)
+        elif page=='2':
+            return movedex.build_embed(move_name)
 
 

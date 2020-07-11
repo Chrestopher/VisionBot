@@ -48,7 +48,7 @@ def generate_movedex_list():
 
 
 def generate_movedex_dictionary():
-    file_path = os.path.join(os_project_path, 'content/pokemon/movedex/moves.json')
+    file_path = os.path.join(os_project_path, 'content/pokemon/movedex/movedex.json')
     with open(file_path, 'r', encoding="utf-8-sig") as f:
         return json.load(f)
 

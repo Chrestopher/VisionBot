@@ -82,5 +82,4 @@ def dump_moves():
     dump_to_json_and_print(moves_dict)
 
 
-dump_moves()
 print(moves_list_manual_fix)
