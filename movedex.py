@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import generate_data
 import discord
+import string
 
 movedex_url_prefix = "https://www.serebii.net/attackdex-swsh/"
 movedex_url_postfix = ".shtml"
@@ -15,7 +16,7 @@ color_type_dictionary = dict(normal="BDBDAE", poison="A85CA0", psychic="0B0C0C",
 
 
 def get_move(args):
-    move_name = "".join(args).capitalize()
+    move_name = string.capwords(" ".join(args))
     movetone = ''
     for move in movedex_list:
         if move.startswith(move_name):
