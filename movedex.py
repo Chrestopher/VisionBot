@@ -30,46 +30,27 @@ def get_move(args):
 def build_embed(move_name):
     thismove = movedex_dictionary[move_name]
     move_color = color_type_dictionary[thismove['type']]
-    secondary_effect = secondary_effect_process(thismove['effect_rate'], thismove['secondary_effect'])
     embed = discord.Embed(title=thismove['name'],
                           description=display_link(move_name),
                           colour=int(move_color, 16))
+    embed.add_field(name="__Move Description__", value=thismove['battle_effect'], inline=False)
+    if thismove['secondary_effect'] != 'No effect.':
+        if thismove['effect_rate'] == "-- %":
+            embed.add_field(name="__Secondary Effect__", value=thismove['secondary_effect'], inline=False)
+        else:
+            embed.add_field(name="__Secondary Effect__",
+                            value=thismove['secondary_effect'] + ' ' + thismove['effect_rate'].replace(" ", "") + '.',
+                            inline=False)
     embed.add_field(name="__Type__", value=thismove['type'].capitalize(), inline=True)
-    embed.add_field(name="__Battle Effects__", value=thismove['battle_effect'] + '\n' + secondary_effect, inline=False)
-    embed.set_thumbnail(url='https://' + thismove['thumbnail'])
-    embed.set_footer(text="Created by VisionBot \n Movedex (1/2)",
-                     icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
-    return embed
-
-
-def build_embed_2(move_name):
-    thismove = movedex_dictionary[move_name]
-    move_color = color_type_dictionary[thismove['type']]
-    embed = discord.Embed(title=thismove['name'],
-                          description=display_link(move_name),
-                          colour=int(move_color, 16))
-    embed.add_field(name='__Category__', value=thismove['category'], inline=False)
+    embed.add_field(name='__Category__', value=thismove['category'].capitalize(), inline=True)
+    embed.add_field(name='‎ ‎', value=' ‎')  # Don't mess with these values, they're an empty unicode.
     embed.add_field(name='__Battle Power__', value=thismove['bp'], inline=True)
     embed.add_field(name='__Power Points__', value=thismove['pp'], inline=True)
     embed.add_field(name='__Accuracy__', value=thismove['acc'], inline=True)
-    embed.set_footer(text="Created by VisionBot \n Movedex (2/2)",
-                     icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     embed.set_thumbnail(url='https://' + thismove['thumbnail'])
+    embed.set_footer(text="Created by VisionBot",
+                     icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed
-
-
-def secondary_effect_process(effectrate, secondary_effect):
-    effectrate_outcome = ''
-    secondary_effect_outcome = ''
-    if effectrate == "-- %":
-        pass
-    else:
-        effectrate_outcome = 'Effect chance: {}'.format(effectrate)
-    if secondary_effect == 'No effect.':
-        pass
-    else:
-        secondary_effect_outcome = 'Secondary effect: ' + secondary_effect
-    return '{}\n{}'.format(secondary_effect_outcome, effectrate_outcome)
 
 
 def display_link(move_name):

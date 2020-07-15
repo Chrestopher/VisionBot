@@ -89,9 +89,7 @@ async def pokedex_command(ctx, *args):
 async def movedex_command(ctx,*args):
     response= movedex.get_move(args)
     if type(response)== discord.embeds.Embed:
-        message=await ctx.send(' ', embed=response)
-        await message.add_reaction("⬅️")
-        await message.add_reaction("➡️")
+        await ctx.send(' ', embed=response)
     elif type(response)== str:
         await ctx.send(response)
 
