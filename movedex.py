@@ -15,6 +15,12 @@ color_type_dictionary = dict(normal="BDBDAE", poison="A85CA0", psychic="0B0C0C",
                              electric="FEE63C", fairy="F8ACFF")
 
 
+image_type_dictionary = dict(normal="https://i.imgur.com/VHI1QGb.png", poison="https://i.imgur.com/8TOnG6t.png", psychic="https://i.imgur.com/MPQU5rR.png", grass="https://i.imgur.com/pYtAlxr.png", ground="https://i.imgur.com/GLlBhxe.png",
+                             ice="https://i.imgur.com/qeCzZDi.png", fire="https://i.imgur.com/zhPTMJo.png", rock="https://i.imgur.com/03LnrUA.png", dragon="https://i.imgur.com/gqhORgQ.png", water="https://i.imgur.com/10Avd13.png", bug="https://i.imgur.com/uefJjFB.png",
+                             dark="https://i.imgur.com/2cVK4CQ.png", fighting="https://i.imgur.com/BcjA0cX.png", ghost="https://i.imgur.com/W42sf0Y.png", steel="https://i.imgur.com/6HoeQTO.png", flying="https://i.imgur.com/J2Vsx11.png",
+                             electric="https://i.imgur.com/S2ZXBvj.png", fairy="https://i.imgur.com/E7nWQI3.png")
+
+
 def get_move(args):
     move_name = string.capwords(" ".join(args))
     movetone = ''
@@ -30,6 +36,7 @@ def get_move(args):
 def build_embed(move_name):
     thismove = movedex_dictionary[move_name]
     move_color = color_type_dictionary[thismove['type']]
+    thumbnail = image_type_dictionary[thismove['type']]
     embed = discord.Embed(title=thismove['name'],
                           description=display_link(move_name),
                           colour=int(move_color, 16))
@@ -47,7 +54,7 @@ def build_embed(move_name):
     embed.add_field(name='__Battle Power__', value=thismove['bp'], inline=True)
     embed.add_field(name='__Power Points__', value=thismove['pp'], inline=True)
     embed.add_field(name='__Accuracy__', value=thismove['acc'], inline=True)
-    embed.set_thumbnail(url='https://' + thismove['thumbnail'])
+    embed.set_thumbnail(url=thumbnail)
     embed.set_footer(text="Created by VisionBot",
                      icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed
