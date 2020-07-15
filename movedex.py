@@ -55,7 +55,7 @@ def build_embed(move_name):
     embed.add_field(name='__Power Points__', value=thismove['pp'], inline=True)
     embed.add_field(name='__Accuracy__', value=thismove['acc'], inline=True)
     embed.set_thumbnail(url=thumbnail)
-    embed.set_footer(text="Created by VisionBot",
+    embed.set_footer(text="Created by VisionBot Movedex",
                      icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed
 
