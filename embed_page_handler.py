@@ -1,6 +1,8 @@
+from discord.embeds import _EmptyEmbed
+
 import help_command
 import pokedex
-
+import movedex
 
 def page_flip_handler(reaction, embed):
     emoji = reaction.emoji
@@ -13,12 +15,13 @@ def page_flip_handler(reaction, embed):
 
 
 def page_flip_commands(embed, direction):
-    if "Help" in embed.title:
-        return handle_commands_embed(embed, direction)
-    elif "Pokedex" in embed.footer.text:
-        return handle_pokedex_embed(embed, direction)
-    else:
-        return "Not a valid embed"
+    if type(embed) is not _EmptyEmbed:
+        if "Help" in embed.title:
+            return handle_commands_embed(embed, direction)
+        elif "Pokedex" in embed.footer.text:
+            return handle_pokedex_embed(embed, direction)
+        else:
+            return "Not a valid embed"
 
 
 def handle_commands_embed(embed, direction):
@@ -52,5 +55,3 @@ def handle_pokedex_embed(embed, direction):
         return pokedex.build_pokemon_stats_embed(pokemon_name)
     elif next_page == 3:
         return pokedex.build_pokemon_weaknesses_resists_embed(pokemon_name)
-
-

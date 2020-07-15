@@ -13,6 +13,7 @@ import num_util_functions
 import randpoke
 import help_command
 import embed_page_handler
+import movedex
 import joe_methods
 
 bot = commands.Bot(command_prefix="!")
@@ -81,6 +82,15 @@ async def pokedex_command(ctx, *args):
         await message.add_reaction("⬅️")
         await message.add_reaction("➡️")
     elif type(response) is str:
+        await ctx.send(response)
+
+
+@bot.command(name='movedex')
+async def movedex_command(ctx,*args):
+    response= movedex.get_move(args)
+    if type(response)== discord.embeds.Embed:
+        await ctx.send(' ', embed=response)
+    elif type(response)== str:
         await ctx.send(response)
 
 
