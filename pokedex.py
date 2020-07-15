@@ -92,11 +92,14 @@ def build_pokemon_weaknesses_resists_embed(pokemon_name):
     color = get_color(type1)
     weakness = get_weaknesses_or_resists(1, pokemon["weakness"])
     resists = get_weaknesses_or_resists(-1, pokemon["weakness"])
+    immunities = get_weaknesses_or_resists(0, pokemon["weakness"])
 
     embed = discord.Embed(title=pokemon["name"], colour=discord.Colour(color))
     embed.set_thumbnail(url=thumbnail)
     embed.add_field(name="Weaknesses", value=format_weaknesses_or_resists(weakness), inline=True)
     embed.add_field(name="Resists", value=format_weaknesses_or_resists(resists), inline=True)
+    if immunities != {}:
+        embed.add_field(name="Immunities", value=format_weaknesses_or_resists(immunities), inline=True)
     embed.set_footer(text="Created by VisionBot Pokedex (3/3)", icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed
 
@@ -123,18 +126,27 @@ def get_weaknesses_or_resists(selection, chart):
     if selection == 1:
         return dict(filter(lambda element: element[1] > 1.0, elements_without_1x.items()))
     elif selection == -1:
-        return dict(filter(lambda element: element[1] < 1.0, elements_without_1x.items()))
+        return dict(filter(lambda element: 1.0 > element[1] > 0.0, elements_without_1x.items()))
+    elif selection == 0:
+        return dict(filter(lambda element: element[1] == 0, elements_without_1x.items()))
+    else:
+        print("dang howd you get here?")
+        return
 
 
 def format_weaknesses_or_resists(elements):
     info = ""
     for type1 in elements.keys():
         mulitiplier = str(elements[type1])
-        if str(elements[type1])[-1] == "0":
-            mulitiplier = mulitiplier[:-2] + "x"
+        if mulitiplier != 0.0:
+            if str(elements[type1])[-1] == "0":
+                mulitiplier = mulitiplier[:-2] + "x"
+            else:
+                mulitiplier = "x" + mulitiplier
+            info += type1.capitalize() + ": " + mulitiplier + "\n"
         else:
-            mulitiplier = "x" + mulitiplier
-        info += type1.capitalize() + ": " + mulitiplier + "\n"
+            info += type1.capitalize() + "\n"
+
     return info
 
 

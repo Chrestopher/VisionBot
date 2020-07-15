@@ -51,7 +51,24 @@ def generate_movedex_dictionary():
     file_path = os.path.join(os_project_path, 'content/pokemon/movedex/movedex.json')
     with open(file_path, 'r', encoding="utf-8-sig") as f:
         return json.load(f)
+def generate_joe_keyword_list():
+    file_path = os.path.join(os_project_path, 'content/joebot/joe_keywords.txt')
+    wordlist = []
+    with open(file_path, 'r', encoding="ISO-8859-1") as f:
+        for x in f:
+            wordlist.append(x.strip())
 
+    return wordlist
+
+
+def generate_joe_keyword_responses_list():
+    file_path = os.path.join(os_project_path, 'content/joebot/joe_keyword_responses.txt')
+    wordlist = []
+    with open(file_path, 'r', encoding="ISO-8859-1") as f:
+        for x in f:
+            wordlist.append(x.strip())
+
+    return wordlist
 
 def generate_itemdex_dictionary():
     file_path = os.path.join(os_project_path, 'content/pokemon/itemdex/itemdex_data.json')
@@ -63,5 +80,4 @@ def generate_pokedex_dictionary():
     file_path = os.path.join(os_project_path, 'content/pokemon/pokedex/pokemon.json')
     with open(file_path, 'r', encoding="utf-8-sig") as f:
         return json.load(f)
-
 
