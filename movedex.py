@@ -31,7 +31,6 @@ def build_embed(move_name):
     thismove = movedex_dictionary[move_name]
     move_color = color_type_dictionary[thismove['type']]
     secondary_effect = secondary_effect_process(thismove['effect_rate'], thismove['secondary_effect'])
-    print(secondary_effect)
     embed = discord.Embed(title=thismove['name'],
                           description=display_link(move_name),
                           colour=int(move_color, 16))
