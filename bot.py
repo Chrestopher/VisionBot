@@ -1,7 +1,6 @@
 import discord
 import os
 import random
-from discord import Reaction, User
 from discord.ext import commands
 import schedule
 import custom_math
@@ -196,7 +195,6 @@ if os.environ.get("bot_cli_key"):
     bot_cli_key = os.environ.get("bot_cli_key")
 else:
     import API_KEYS
-
     bot_cli_key = API_KEYS.bot_cli_key
 
 bot.run(bot_cli_key)
