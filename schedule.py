@@ -76,7 +76,8 @@ def add_event(args):
 
 
 def remove_event(args):
-    event_name = args[0]
+    print(args)
+    event_name = ' '.join(args)
     schedule = load_json()
     if event_name in schedule["schedule"]:
         del schedule["schedule"][event_name]
