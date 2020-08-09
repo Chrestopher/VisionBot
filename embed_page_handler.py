@@ -26,7 +26,7 @@ def page_flip_commands(embed, direction):
 
 def handle_commands_embed(embed, direction):
     current_page = int(embed.footer.text.split("/")[0])
-    if direction == 1 and current_page != 3:
+    if direction == 1 and current_page != 4:
         return help_command.helppages[current_page + 1]
     if direction == -1 and current_page != 1:
         return help_command.helppages[current_page - 1]
@@ -34,7 +34,7 @@ def handle_commands_embed(embed, direction):
         if direction == 1:
             return help_command.helppages[1]
         elif direction == -1:
-            return help_command.helppages[3]
+            return help_command.helppages[4]
         else:
             print("Direction should be 1 or -1")
 

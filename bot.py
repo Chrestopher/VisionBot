@@ -14,6 +14,7 @@ import help_command
 import embed_page_handler
 import movedex
 import joe_methods
+import anime
 
 bot = commands.Bot(command_prefix="!")
 
@@ -122,6 +123,11 @@ async def math_command(ctx, *args):
 @bot.command(name="simonsays")
 async def simonsays_command(ctx, *args):
     msg = " ".join(args)
+    await ctx.send(msg)
+
+@bot.command(name="anime")
+async def anime_command(ctx, *args):
+    msg = anime.search(args)
     await ctx.send(msg)
 
 
