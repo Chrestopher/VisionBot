@@ -10,7 +10,7 @@ def search(args):
         result = requests.get('https://api.jikan.moe/v3/search/character?q=' + character +'&limit=1')
         if result.status_code == 404:
             return "Your Character does not exist."
-        time.sleep(4)
+        time.sleep(1)
         result_id = result.json()['results'][0]['mal_id']
         pictures_links = requests.get('https://api.jikan.moe/v3/character/' + str(result_id) + '/pictures')
         if len(pictures_links.json()['pictures']) == 0:
