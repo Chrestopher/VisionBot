@@ -24,4 +24,4 @@ def pull_from_json(query):
         raise Exception("query not found")
 
 
-print(pull_from_json("2"))
+
