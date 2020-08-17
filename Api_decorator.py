@@ -6,7 +6,6 @@ from functools import wraps
 class api_call_saver():
 
     def __init__(self, *, target_file):
-
         self.target_file = target_file
 
     def __call__(self, apiCall):
@@ -52,3 +51,4 @@ def pull_from_json(query, target_file):
         return data[query]
     except:
         raise Exception("query not found")
+

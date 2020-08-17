@@ -21,7 +21,7 @@ def scrape_to_file():
 def scrape_berries():
     item_dict = {}
 
-    url = "https://serebii.net/itemdex/roseliberry.shtml"
+    url = "https://serebii.net/itemdex/rzoseliberry.shtml"
     r = requests.get(url)
     if r.status_code == 404:
         return "Could not find item"
@@ -67,4 +67,4 @@ def dump_to_json_and_print(data):
 
 # grab_items()
 # scrape_berries()
-scrape_to_file()
+#scrape_to_file()

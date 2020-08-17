@@ -1,7 +1,6 @@
 import discord
 import os
 import random
-from discord import Reaction, User
 from discord.ext import commands
 import schedule
 import custom_math
@@ -13,6 +12,9 @@ import num_util_functions
 import randpoke
 import help_command
 import embed_page_handler
+import movedex
+import joe_methods
+import anime
 
 bot = commands.Bot(command_prefix="!")
 
@@ -21,6 +23,7 @@ bot_client_id = "691856016333078540"
 messages = 0
 blacklisted_channels = ["botandvoicechat", "waifu-bot-spam", "slick-dealz", "waifu-bot-rolls"]
 joe_messages = generate_data.generate_joe()
+joe_keywords = generate_data.generate_joe_keyword_list()
 
 
 @bot.command(name="visionbot")
@@ -66,9 +69,7 @@ async def removeevent_command(ctx, *args):
 async def itemdex_command(ctx, *args):
     response = itemdex.get_item(args)
     if type(response) is discord.embeds.Embed:
-        message = await ctx.send(" ", embed=response)
-        # await message.add_reaction("⬅️")
-        # await message.add_reaction("➡️")
+        await ctx.send(" ", embed=response)
     elif type(response) is str:
         await ctx.send(response)
 
@@ -81,6 +82,15 @@ async def pokedex_command(ctx, *args):
         await message.add_reaction("⬅️")
         await message.add_reaction("➡️")
     elif type(response) is str:
+        await ctx.send(response)
+
+
+@bot.command(name='movedex')
+async def movedex_command(ctx,*args):
+    response= movedex.get_move(args)
+    if type(response)== discord.embeds.Embed:
+        await ctx.send(' ', embed=response)
+    elif type(response)== str:
         await ctx.send(response)
 
 
@@ -113,6 +123,11 @@ async def math_command(ctx, *args):
 @bot.command(name="simonsays")
 async def simonsays_command(ctx, *args):
     msg = " ".join(args)
+    await ctx.send(msg)
+
+@bot.command(name="anime")
+async def anime_command(ctx, *args):
+    msg = anime.search(args)
     await ctx.send(msg)
 
 
@@ -149,6 +164,14 @@ async def on_message(message):
     global messages
     messages += 1
 
+    for word in joe_keywords:
+        if word in message.content:
+            if random.randint(0, 10) > 9:
+                await message.add_reaction(joe_methods.get_joe_emote_response())
+            else:
+                await message.channel.send(joe_methods.get_joe_keyword_response())
+            return
+
     if messages % 100 == 0:
         await message.channel.send(joe_messages[index])
         return
@@ -178,7 +201,6 @@ if os.environ.get("bot_cli_key"):
     bot_cli_key = os.environ.get("bot_cli_key")
 else:
     import API_KEYS
-
     bot_cli_key = API_KEYS.bot_cli_key
 
 bot.run(bot_cli_key)
