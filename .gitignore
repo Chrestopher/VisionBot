@@ -13,3 +13,7 @@ __pycache__/
 git
 .vscode
 pokemon.json
+apicalls/
+#Khajeet stuff
+.project
+.pydevproject
