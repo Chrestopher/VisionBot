@@ -3,29 +3,29 @@ import json
 from functools import wraps
 
 
-class api_call_saver():
+class ApiCallSaver:
 
     def __init__(self, *, target_file):
         self.target_file = target_file
 
-    def __call__(self, apiCall):
+    def __call__(self, api_call):
 
-        @wraps(apiCall)
-        def callable(callParameter):
-            result = apiCall(callParameter)
-            data = [result]
-            self.appending_to_json(callParameter, data)
+        @wraps(api_call)
+        def callable(*args):
+            result = api_call(*args)
+            data = result
+            self.appending_to_json(args[0], data)
             return result
         return callable
 
-    def appending_to_json(self, callParameter, data):
-        target = "apicalls/{}.json".format(self.target_file)
+    def appending_to_json(self, call_parameter, data):
+        target = "content/anime/{}.json".format(self.target_file)
         newfile = self.try_reading_json(target)
         with open(target, "w") as outfile:
-            newkey = {callParameter: data}
+            newkey = {call_parameter[1]: data}
             newfile.update(newkey)
             json.dump(newfile, outfile)
-            print("{} has been saved to file".format(callParameter))
+            print("{} has been saved to file".format(call_parameter))
 
     def try_reading_json(self, target):
         try:
@@ -40,15 +40,15 @@ class api_call_saver():
 
 
 def pull_from_json(query, target_file):
-
-    target = "apicalls/{}.json".format(target_file)
+    target = "content/anime/{}.json".format(target_file)
     try:
         with open(target, "r") as file:
             data = json.loads(file.read())
     except:
         raise Exception("target file not found")
+
     try:
         return data[query]
-    except:
-        raise Exception("query not found")
+    except KeyError:
+        raise KeyError
 

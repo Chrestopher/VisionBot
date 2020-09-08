@@ -2,7 +2,9 @@ from discord.embeds import _EmptyEmbed
 
 import help_command
 import pokedex
-import movedex
+import anime
+import Api_decorator
+
 
 def page_flip_handler(reaction, embed):
     emoji = reaction.emoji
@@ -15,13 +17,17 @@ def page_flip_handler(reaction, embed):
 
 
 def page_flip_commands(embed, direction):
-    if type(embed) is not _EmptyEmbed:
+    try:
         if "Help" in embed.title:
             return handle_commands_embed(embed, direction)
         elif "Pokedex" in embed.footer.text:
             return handle_pokedex_embed(embed, direction)
+        elif "AnimeStats" in embed.footer.text:
+            return handle_animestats_embed(embed, direction)
         else:
             return "Not a valid embed"
+    except:
+        pass
 
 
 def handle_commands_embed(embed, direction):
@@ -37,6 +43,26 @@ def handle_commands_embed(embed, direction):
             return help_command.helppages[4]
         else:
             print("Direction should be 1 or -1")
+
+
+def handle_animestats_embed(embed, direction):
+    anime_name = embed.title
+    animedex_page_mapper = {"1": 2, "2": 3, "3": 1}
+    animedex_page_mapper_reverse = {"1": 3, "3": 2, "2": 1}
+    page = embed.footer.text[43]
+    if direction == 1:
+        next_page = animedex_page_mapper[page]
+    else:
+        next_page = animedex_page_mapper_reverse[page]
+
+    json_data = Api_decorator.pull_from_json(anime_name, 'animedb')
+
+    if next_page == 1:
+        return anime.build_anime_info(json_data)
+    elif next_page == 2:
+        return anime.build_anime_stats(json_data)
+    elif next_page == 3:
+        return anime.build_anime_scores(json_data)
 
 
 def handle_pokedex_embed(embed, direction):

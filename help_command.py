@@ -33,7 +33,8 @@ helppages[3].add_field(name="simonsays [anything]", value="Makes visionbot repea
 
 # Help page 4
 helppages[4].set_footer(text="\t\t\t\t4/4")
-helppages[4].add_field(name="anime", value="Searches and displays a picture of a specified anime/manga character", inline=False)
+helppages[4].add_field(name="animechar [character]", value="Searches and displays a picture of a specified anime/manga character", inline=False)
+helppages[4].add_field(name="anime [anime name]", value="Searches and displays an anime with info like summary, stats, scores, etc", inline=False)
 
 def start_help_command():
     return helppages[1]

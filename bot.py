@@ -45,7 +45,7 @@ async def coinflip_command(ctx):
 
 @bot.command(name="credits")
 async def credits_command(ctx):
-    msg = "This bot was developed by @Chres, @Khajeet, and @neffrw. Show them some pictures of quints to make their " \
+    msg = "This bot was developed by @Chres, @Khajeet, @neffrw, @Big Bass. Show them some pictures of quints to make their " \
           "day! "
     await ctx.send(msg)
 
@@ -86,11 +86,11 @@ async def pokedex_command(ctx, *args):
 
 
 @bot.command(name='movedex')
-async def movedex_command(ctx,*args):
-    response= movedex.get_move(args)
-    if type(response)== discord.embeds.Embed:
+async def movedex_command(ctx, *args):
+    response = movedex.get_move(args)
+    if type(response) == discord.embeds.Embed:
         await ctx.send(' ', embed=response)
-    elif type(response)== str:
+    elif type(response) == str:
         await ctx.send(response)
 
 
@@ -125,10 +125,22 @@ async def simonsays_command(ctx, *args):
     msg = " ".join(args)
     await ctx.send(msg)
 
+
+@bot.command(name="animechar")
+async def animechar_command(ctx, *args):
+    msg = anime.char_pic(args)
+    await ctx.send(msg)
+
+
 @bot.command(name="anime")
 async def anime_command(ctx, *args):
-    msg = anime.search(args)
-    await ctx.send(msg)
+    response = anime.anime_stats(args)
+    if type(response) is discord.embeds.Embed:
+        message = await ctx.send(" ", embed=response)
+        await message.add_reaction("⬅️")
+        await message.add_reaction("➡️")
+    elif type(response) is str:
+        await ctx.send(response)
 
 
 @bot.command(name="commands")
@@ -201,6 +213,7 @@ if os.environ.get("bot_cli_key"):
     bot_cli_key = os.environ.get("bot_cli_key")
 else:
     import API_KEYS
+
     bot_cli_key = API_KEYS.bot_cli_key
 
 bot.run(bot_cli_key)
