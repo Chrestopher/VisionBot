@@ -21,6 +21,10 @@ def random_linkcode():
     return message
 
 
+def choose_randomly(args):
+    return args[random.randint(0, len(args)-1)]
+
+
 def convert_meters_to_feet_inches(value):
     value = float(value)
     inches = value * 39.37

@@ -99,6 +99,13 @@ async def randpoke_command(ctx, *args):
     await ctx.send(randpoke.get_rand_poke(args))
 
 
+@bot.command(name="choose")
+async def randpoke_command(ctx, *args):
+    args = " ".join(args)
+    args = args.split(",")
+    await ctx.send(num_util_functions.choose_randomly(args))
+
+
 @bot.command(name="profile")
 async def profile_command(ctx, *args):
     response = profile.profile(ctx, args)

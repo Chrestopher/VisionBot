@@ -4,7 +4,7 @@ import traceback
 import requests
 from bs4 import BeautifulSoup
 
-import pokedex_evo_scrapper
+from scrapers import pokedex_evo_scrapper
 
 
 # pokemon = "https://serebii.net/pokedex-swsh/bulbasaur/"
