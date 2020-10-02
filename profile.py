@@ -1,6 +1,5 @@
 import discord
 import json_api
-import string
 profile_categories = ["color", "bio", "emote", "anime", "pokemon", "game", "waifu", "main", "song"]
 
 
@@ -12,7 +11,8 @@ def profile(ctx, args):
     context = ctx.message
     name = context.author.name
     descriptor = context.author.discriminator
-    user = name + descriptor
+    user = (name + descriptor).lower()
+    print(user)
     avatar_url = context.author.avatar_url
     return process_message(user, avatar_url, args)
 
@@ -44,9 +44,8 @@ def process_message(user, avatar_url, args):
 
 def view_account(user, avatar_url, args):
     profiles = json_api.get_profiles_json()
-    # checks if user is trying to pull view another profile
-    if len(args) >= 2:
-        search = string.capwords(args[1])
+    if len(args) >= 2:  # checks if user is trying to pull view another profile
+        search = args[1].lower()
         found_user = ""
         for user in profiles.keys():
             if user.startswith(search):
@@ -56,8 +55,7 @@ def view_account(user, avatar_url, args):
             return "That user does not have a profile!"
         else:
             return construct_embed(found_user, profiles, avatar_url)
-    # attempts to return users own profile
-    else:
+    else:  # attempts to return users own profile
         if user not in profiles.keys():
             return "You do not have a profile! Use !profile create to make one!"
         return construct_embed(user, profiles, avatar_url)
