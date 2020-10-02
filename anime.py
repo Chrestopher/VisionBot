@@ -23,7 +23,7 @@ def search(search_name, search_type):
         query = "%20".join(search_name)
         response = requests.get('https://api.jikan.moe/v3/search/' + search_type + '?q=' + query + '&limit=1')
         result = response.json()['results'][0]
-        time.sleep(1)
+        time.sleep(0.5)
         if response.status_code == 404:
             return "404"
         result_id = result['mal_id']
@@ -76,19 +76,33 @@ def api_info_getter(anime_info):
     :return: The dictionary containing all of the needed information about the anime in-question.
     """
     stats = requests.get('https://api.jikan.moe/v3/anime/' + str(anime_info[0]) + '/stats')
+    time.sleep(0.5)
+    home = requests.get('https://api.jikan.moe/v3/anime/' + str(anime_info[0]) + '/')
+    stats = stats.json()
+    home = home.json()
+
+
+    # anime info
     anime_name = anime_info[1]
     database_id_name = anime_info[0]
     thumbnail = anime_info[2]
-    watching = str(stats.json()['watching'])
-    completed = str(stats.json()['completed'])
-    on_hold = str(stats.json()['on_hold'])
-    dropped = str(stats.json()['dropped'])
-    plan_to_watch = str(stats.json()['plan_to_watch'])
-    total = str(stats.json()['total'])
-    scores = (stats.json()['scores'])
-    score_string = score_string_builder(scores)
     summary = anime_info[3]
-    data_tuple = (anime_name, database_id_name, thumbnail, watching, completed, on_hold, dropped, plan_to_watch, total, score_string, summary)
+
+    # stats
+    watching = str(stats['watching'])
+    completed = str(stats['completed'])
+    on_hold = str(stats['on_hold'])
+    dropped = str(stats['dropped'])
+    plan_to_watch = str(stats['plan_to_watch'])
+    total = str(stats['total'])
+    scores = (stats['scores'])
+    score_string = score_string_builder(scores)
+
+    # home
+    genres = get_genres(home["genres"])
+    print(genres)
+
+    data_tuple = (anime_name, database_id_name, thumbnail, watching, completed, on_hold, dropped, plan_to_watch, total, score_string, summary, genres)
     anime_info_dict = anime_stats_dictionary_builder(data_tuple)
     return anime_info_dict
 
@@ -134,6 +148,7 @@ def anime_stats_dictionary_builder(anime_data):
     anime_stat_dict.update({'total': anime_data[8]})
     anime_stat_dict.update({'scores': anime_data[9]})
     anime_stat_dict.update({'summary': anime_data[10]})
+    anime_stat_dict.update({'genres': anime_data[11]})
     return anime_stat_dict
 
 
@@ -216,3 +231,11 @@ def char_pic(args):
 
 def display_link(anime_id):
     return "[MAL](" + "https://myanimelist.net/anime/" + str(anime_id) + ")"
+
+
+def get_genres(genres_list):
+    genres = []
+    for genre in genres_list:
+        genres.append(genre["name"])
+
+    return genres
