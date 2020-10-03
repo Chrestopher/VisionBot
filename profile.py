@@ -12,7 +12,6 @@ def profile(ctx, args):
     name = context.author.name
     descriptor = context.author.discriminator
     user = (name + descriptor).lower()
-    print(user)
     avatar_url = context.author.avatar_url
     return process_message(user, avatar_url, args)
 
