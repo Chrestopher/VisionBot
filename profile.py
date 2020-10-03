@@ -1,6 +1,5 @@
 import discord
 import json_api
-
 profile_categories = ["color", "bio", "emote", "anime", "pokemon", "game", "waifu", "main", "song"]
 
 
@@ -12,16 +11,14 @@ def profile(ctx, args):
     context = ctx.message
     name = context.author.name
     descriptor = context.author.discriminator
-    user = name + descriptor
+    user = (name + descriptor).lower()
     avatar_url = context.author.avatar_url
-    print(avatar_url)
-    print(ctx.author)
     return process_message(user, avatar_url, args)
 
 
 def process_message(user, avatar_url, args):
     if len(args) is 0:
-        return "Update command missing parameters: !profile update {category} {value}"
+        return "These are the following options for this command: view, update, create."
     command = args[0]
 
     if command == "update":
@@ -39,17 +36,28 @@ def process_message(user, avatar_url, args):
     elif command == "create":
         return create_account(user)
     elif command == "view":
-        return view_account(user, avatar_url)
+        return view_account(user, avatar_url, args)
     else:
         return "That command does not exist!"
 
 
-def view_account(user, avatar_url):
+def view_account(user, avatar_url, args):
     profiles = json_api.get_profiles_json()
-    if user not in profiles.keys():
-        return "You do not have a profile! Use !profile create to make one!"
-    print(profiles)
-    return construct_embed(user, profiles, avatar_url)
+    if len(args) >= 2:  # checks if user is trying to pull view another profile
+        search = args[1].lower()
+        found_user = ""
+        for user in profiles.keys():
+            if user.startswith(search):
+                found_user = user
+                break
+        if len(found_user) == 0:
+            return "That user does not have a profile!"
+        else:
+            return construct_embed(found_user, profiles, avatar_url)
+    else:  # attempts to return users own profile
+        if user not in profiles.keys():
+            return "You do not have a profile! Use !profile create to make one!"
+        return construct_embed(user, profiles, avatar_url)
 
 
 def update_account(user, param, value):
@@ -119,5 +127,4 @@ def construct_embed(user, profiles, avatar_url):
     embed.add_field(name="My waifu/husbando:", value=waifu, inline=False)
     embed.add_field(name="My favorite pokemon:", value=pokemon, inline=False)
     embed.add_field(name="My smash main(s):", value=main, inline=False)
-
     return embed
