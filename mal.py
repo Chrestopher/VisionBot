@@ -33,6 +33,12 @@ def search(search_name, search_type):
             anime_summary = result['synopsis']
             anime_info = (result_id, anime_title, anime_thumbnail, anime_summary)
             return anime_info
+        if search_type == 'manga':
+            manga_title = result['title']
+            manga_thumbnail = result['image_url']
+            manga_summary = result['synopsis']
+            manga_info = (result_id, manga_title, manga_thumbnail, manga_summary)
+            return manga_info
         else:
             return result_id
     else:
@@ -59,12 +65,28 @@ def anime_stats(args):
         try:
             anime_stat_dict = pull_from_json(anime_info[1], 'animedb')
         except:
-            anime_stat_dict = api_info_getter(anime_info)
-        return build_anime_info(anime_stat_dict)
+            anime_stat_dict = anime_api_info_getter(anime_info)
+        return build_mal_info(anime_stat_dict, 'animedb')
+
+
+def manga_stats(args):
+    """
+    """
+    manga_info = search(args, 'manga')
+    if manga_info == "-1":
+        return 'Error: You need a name with more than 3 characters!!!'
+    elif manga_info == "404":
+        return "The anime does not exist."
+    else:
+        try:
+            manga_stat_dict = pull_from_json(manga_info[1], 'mangadb')
+        except:
+            manga_stat_dict = manga_api_info_getter(manga_info)
+        return build_mal_info(manga_stat_dict, 'mangadb')
 
 
 @ApiCallSaver(target_file='animedb')
-def api_info_getter(anime_info):
+def anime_api_info_getter(anime_info):
     """
     Takes in an anime name, the MyAnimeList database id of that anime, and the URL link to the MyAnimeList image for
     that anime; it then uses the database id in order to make an API call that retrieves the "stats" info of the
@@ -105,6 +127,43 @@ def api_info_getter(anime_info):
     data_tuple = (anime_name, database_id_name, thumbnail, watching, completed, on_hold, dropped, plan_to_watch, total, score_string, summary, genres)
     anime_info_dict = anime_stats_dictionary_builder(data_tuple)
     return anime_info_dict
+
+
+@ApiCallSaver(target_file='mangadb')
+def manga_api_info_getter(manga_info):
+    """
+    """
+    stats = requests.get('https://api.jikan.moe/v3/manga/' + str(manga_info[0]) + '/stats')
+    time.sleep(0.5)
+    home = requests.get('https://api.jikan.moe/v3/manga/' + str(manga_info[0]) + '/')
+    stats = stats.json()
+    home = home.json()
+
+    print(stats)
+    print(home)
+
+    # anime info
+    anime_name = manga_info[1]
+    database_id_name = manga_info[0]
+    thumbnail = manga_info[2]
+    summary = manga_info[3]
+
+    # stats
+    reading = str(stats['reading'])
+    completed = str(stats['completed'])
+    on_hold = str(stats['on_hold'])
+    dropped = str(stats['dropped'])
+    plan_to_read = str(stats['plan_to_read'])
+    total = str(stats['total'])
+    scores = (stats['scores'])
+    score_string = score_string_builder(scores)
+
+    genres = get_genres(home["genres"])
+    print(genres)
+
+    data_tuple = (anime_name, database_id_name, thumbnail, reading, completed, on_hold, dropped, plan_to_read, total, score_string, summary, genres)
+    manga_info_dict = manga_stats_dictionary_builder(data_tuple)
+    return manga_info_dict
 
 
 def score_string_builder(score_list):
@@ -152,7 +211,31 @@ def anime_stats_dictionary_builder(anime_data):
     return anime_stat_dict
 
 
-def build_anime_info(anime_info):
+def manga_stats_dictionary_builder(manga_data):
+    """
+    Takes in a tuple of anime data (which includes information such as name, database id, watching, etc)
+    and creates a dictionary with keys that accurately reference each different data piece within the tuple,
+    and finally returns that dictionary.
+    :param anime_data: The tuple of anime data whose data will be used to create keys under which it will be values for.
+    :return: A dictionary containing the data from the anime_data tuple.
+    """
+    anime_stat_dict = {}
+    anime_stat_dict.update({'name': manga_data[0]})
+    anime_stat_dict.update({'database_id': manga_data[1]})
+    anime_stat_dict.update({'thumbnail': manga_data[2]})
+    anime_stat_dict.update({'reading': manga_data[3]})
+    anime_stat_dict.update({'completed': manga_data[4]})
+    anime_stat_dict.update({'on_hold': manga_data[5]})
+    anime_stat_dict.update({'dropped': manga_data[6]})
+    anime_stat_dict.update({'plan': manga_data[7]})
+    anime_stat_dict.update({'total': manga_data[8]})
+    anime_stat_dict.update({'scores': manga_data[9]})
+    anime_stat_dict.update({'summary': manga_data[10]})
+    anime_stat_dict.update({'genres': manga_data[11]})
+    return anime_stat_dict
+
+
+def build_mal_info(anime_info, db):
     """
     Takes in a dictionary containing the "stats" information of an anime, and uses it to construct and return an embed
     page (page 1) containing that information.
@@ -165,12 +248,17 @@ def build_anime_info(anime_info):
     embed.add_field(name="Summary", value=anime_info["summary"])
     embed.set_thumbnail(url=anime_info['thumbnail'])
 
-    embed.set_footer(text="Created by VisionBot AnimeStats Protocols (1/3)",
+    if db == "animedb":
+        footer_text = "Created by VisionBot AnimeStats Protocols (1/3)"
+    else:
+        footer_text = "Created by VisionBot MangaStats Protocols (1/3)"
+
+    embed.set_footer(text=footer_text,
                      icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed
 
 
-def build_anime_stats(anime_stat):
+def build_mal_stats(anime_stat, db):
     """
     Takes in a dictionary containing the "stats" information of an anime, and uses it to construct and return an embed
     page (page 1) containing that information.
@@ -179,18 +267,35 @@ def build_anime_stats(anime_stat):
     """
     embed = (discord.Embed(title=anime_stat['name'], colour=discord.Colour(int("FEE63C", 16))))
     embed.set_thumbnail(url=anime_stat['thumbnail'])
-    embed.add_field(name="Watching: ", value=anime_stat['watching'], inline=True)
+
+    if 'watching' in anime_stat.keys():
+        print('watching')
+        embed.add_field(name="Watching: ", value=anime_stat['watching'], inline=True)
+        embed.add_field(name="Plan To Watch: ", value=anime_stat['plan'], inline=False)
+    elif 'reading' in anime_stat.keys():
+        print('reading')
+        embed.add_field(name="Reading: ", value=anime_stat['reading'], inline=True)
+        embed.add_field(name="Plan To Read: ", value=anime_stat['plan'], inline=False)
+    else:
+        print("error")
+
+    print('help')
     embed.add_field(name="Completed: ", value=anime_stat['completed'], inline=False)
     embed.add_field(name="On Hold: ", value=anime_stat['on_hold'], inline=False)
     embed.add_field(name="Dropped: ", value=anime_stat['dropped'], inline=False)
-    embed.add_field(name="Plan To Watch: ", value=anime_stat['plan'], inline=False)
     embed.add_field(name="Total: ", value=anime_stat['total'], inline=False)
-    embed.set_footer(text="Created by VisionBot AnimeStats Protocols (2/3)",
+
+    if db == "animedb":
+        footer_text = "Created by VisionBot AnimeStats Protocols (2/3)"
+    else:
+        footer_text = "Created by VisionBot MangaStats Protocols (2/3)"
+
+    embed.set_footer(text=footer_text,
                      icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed
 
 
-def build_anime_scores(anime_stat):
+def build_mal_scores(anime_stat, db):
     """
     Takes in a dictionary containing the "stats" information of an anime, and uses it to construct and return an embed
     page (page 3) containing that information.
@@ -200,7 +305,13 @@ def build_anime_scores(anime_stat):
     embed = (discord.Embed(title=anime_stat['name'], colour=discord.Colour(int("FEE63C", 16))))
     embed.set_thumbnail(url=anime_stat['thumbnail'])
     embed.add_field(name="Scores: " + '\n', value=anime_stat['scores'], inline=True)
-    embed.set_footer(text="Created by VisionBot AnimeStats Protocols (3/3)",
+
+    if db == "animedb":
+        footer_text = "Created by VisionBot AnimeStats Protocols (3/3)"
+    else:
+        footer_text = "Created by VisionBot MangaStats Protocols (3/3)"
+
+    embed.set_footer(text=footer_text,
                      icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
     return embed
 

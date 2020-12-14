@@ -14,7 +14,7 @@ import help_command
 import embed_page_handler
 import movedex
 import joe_methods
-import anime
+import mal
 
 bot = commands.Bot(command_prefix="!")
 
@@ -135,13 +135,24 @@ async def simonsays_command(ctx, *args):
 
 @bot.command(name="animechar")
 async def animechar_command(ctx, *args):
-    msg = anime.char_pic(args)
+    msg = mal.char_pic(args)
     await ctx.send(msg)
 
 
 @bot.command(name="anime")
 async def anime_command(ctx, *args):
-    response = anime.anime_stats(args)
+    response = mal.anime_stats(args)
+    if type(response) is discord.embeds.Embed:
+        message = await ctx.send(" ", embed=response)
+        await message.add_reaction("⬅️")
+        await message.add_reaction("➡️")
+    elif type(response) is str:
+        await ctx.send(response)
+
+
+@bot.command(name="manga")
+async def manga_command(ctx, *args):
+    response = mal.manga_stats(args)
     if type(response) is discord.embeds.Embed:
         message = await ctx.send(" ", embed=response)
         await message.add_reaction("⬅️")

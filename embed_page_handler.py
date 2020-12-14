@@ -2,7 +2,7 @@ from discord.embeds import _EmptyEmbed
 
 import help_command
 import pokedex
-import anime
+import mal
 import Api_decorator
 
 
@@ -23,7 +23,10 @@ def page_flip_commands(embed, direction):
         elif "Pokedex" in embed.footer.text:
             return handle_pokedex_embed(embed, direction)
         elif "AnimeStats" in embed.footer.text:
-            return handle_animestats_embed(embed, direction)
+            return handle_mal_embed(embed, direction, 'animedb')
+        elif "MangaStats" in embed.footer.text:
+            print('manga')
+            return handle_mal_embed(embed, direction, 'mangadb')
         else:
             return "Not a valid embed"
     except:
@@ -45,24 +48,27 @@ def handle_commands_embed(embed, direction):
             print("Direction should be 1 or -1")
 
 
-def handle_animestats_embed(embed, direction):
+def handle_mal_embed(embed, direction, db):
     anime_name = embed.title
     animedex_page_mapper = {"1": 2, "2": 3, "3": 1}
     animedex_page_mapper_reverse = {"1": 3, "3": 2, "2": 1}
     page = embed.footer.text[43]
+
     if direction == 1:
         next_page = animedex_page_mapper[page]
     else:
         next_page = animedex_page_mapper_reverse[page]
 
-    json_data = Api_decorator.pull_from_json(anime_name, 'animedb')
+    json_data = Api_decorator.pull_from_json(anime_name, db)
 
     if next_page == 1:
-        return anime.build_anime_info(json_data)
+        return mal.build_mal_info(json_data, db)
     elif next_page == 2:
-        return anime.build_anime_stats(json_data)
+        return mal.build_mal_stats(json_data, db)
     elif next_page == 3:
-        return anime.build_anime_scores(json_data)
+        return mal.build_mal_scores(json_data, db)
+    else:
+        print('not a number')
 
 
 def handle_pokedex_embed(embed, direction):
