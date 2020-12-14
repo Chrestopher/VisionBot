@@ -122,9 +122,11 @@ def anime_api_info_getter(anime_info):
 
     # home
     genres = get_genres(home["genres"])
+    popularity = home['popularity']
+    rank = home['rank']
     print(genres)
 
-    data_tuple = (anime_name, database_id_name, thumbnail, watching, completed, on_hold, dropped, plan_to_watch, total, score_string, summary, genres)
+    data_tuple = (anime_name, database_id_name, thumbnail, watching, completed, on_hold, dropped, plan_to_watch, total, score_string, summary, genres, popularity, rank)
     anime_info_dict = anime_stats_dictionary_builder(data_tuple)
     return anime_info_dict
 
@@ -158,10 +160,13 @@ def manga_api_info_getter(manga_info):
     scores = (stats['scores'])
     score_string = score_string_builder(scores)
 
+    # home
     genres = get_genres(home["genres"])
+    popularity = home['popularity']
+    rank = home['rank']
     print(genres)
 
-    data_tuple = (anime_name, database_id_name, thumbnail, reading, completed, on_hold, dropped, plan_to_read, total, score_string, summary, genres)
+    data_tuple = (anime_name, database_id_name, thumbnail, reading, completed, on_hold, dropped, plan_to_read, total, score_string, summary, genres, popularity, rank)
     manga_info_dict = manga_stats_dictionary_builder(data_tuple)
     return manga_info_dict
 
@@ -208,6 +213,8 @@ def anime_stats_dictionary_builder(anime_data):
     anime_stat_dict.update({'scores': anime_data[9]})
     anime_stat_dict.update({'summary': anime_data[10]})
     anime_stat_dict.update({'genres': anime_data[11]})
+    anime_stat_dict.update({'popularity': anime_data[12]})
+    anime_stat_dict.update({'rank': anime_data[13]})
     return anime_stat_dict
 
 
@@ -219,23 +226,25 @@ def manga_stats_dictionary_builder(manga_data):
     :param anime_data: The tuple of anime data whose data will be used to create keys under which it will be values for.
     :return: A dictionary containing the data from the anime_data tuple.
     """
-    anime_stat_dict = {}
-    anime_stat_dict.update({'name': manga_data[0]})
-    anime_stat_dict.update({'database_id': manga_data[1]})
-    anime_stat_dict.update({'thumbnail': manga_data[2]})
-    anime_stat_dict.update({'reading': manga_data[3]})
-    anime_stat_dict.update({'completed': manga_data[4]})
-    anime_stat_dict.update({'on_hold': manga_data[5]})
-    anime_stat_dict.update({'dropped': manga_data[6]})
-    anime_stat_dict.update({'plan': manga_data[7]})
-    anime_stat_dict.update({'total': manga_data[8]})
-    anime_stat_dict.update({'scores': manga_data[9]})
-    anime_stat_dict.update({'summary': manga_data[10]})
-    anime_stat_dict.update({'genres': manga_data[11]})
-    return anime_stat_dict
+    manga_stat_dict = {}
+    manga_stat_dict.update({'name': manga_data[0]})
+    manga_stat_dict.update({'database_id': manga_data[1]})
+    manga_stat_dict.update({'thumbnail': manga_data[2]})
+    manga_stat_dict.update({'reading': manga_data[3]})
+    manga_stat_dict.update({'completed': manga_data[4]})
+    manga_stat_dict.update({'on_hold': manga_data[5]})
+    manga_stat_dict.update({'dropped': manga_data[6]})
+    manga_stat_dict.update({'plan': manga_data[7]})
+    manga_stat_dict.update({'total': manga_data[8]})
+    manga_stat_dict.update({'scores': manga_data[9]})
+    manga_stat_dict.update({'summary': manga_data[10]})
+    manga_stat_dict.update({'genres': manga_data[11]})
+    manga_stat_dict.update({'popularity': manga_data[12]})
+    manga_stat_dict.update({'rank': manga_data[13]})
+    return manga_stat_dict
 
 
-def build_mal_info(anime_info, db):
+def build_mal_info(mal_info, db):
     """
     Takes in a dictionary containing the "stats" information of an anime, and uses it to construct and return an embed
     page (page 1) containing that information.
@@ -243,10 +252,11 @@ def build_mal_info(anime_info, db):
     :return: The page 1 embed page of "stats" information for the anime.
     """
     color = int("FEE63C", 16)
-    embed = discord.Embed(title=anime_info['name'], colour=discord.Colour(color),
-                          description=display_link(anime_info["database_id"], db))
-    embed.add_field(name="Summary", value=anime_info["summary"])
-    embed.set_thumbnail(url=anime_info['thumbnail'])
+    embed_description = display_link(mal_info["database_id"], db) + '\n' + "**Rank**: #" + str(mal_info['rank']) +'\n' + "**Popularity**: #" + str(mal_info['popularity'])
+    embed = discord.Embed(title=mal_info['name'], colour=discord.Colour(color),
+                          description=embed_description)
+    embed.add_field(name="Summary", value=mal_info["summary"])
+    embed.set_thumbnail(url=mal_info['thumbnail'])
 
     if db == "animedb":
         footer_text = "Created by VisionBot AnimeStats Protocols (1/3)"
@@ -258,29 +268,29 @@ def build_mal_info(anime_info, db):
     return embed
 
 
-def build_mal_stats(anime_stat, db):
+def build_mal_stats(mal_stats, db):
     """
     Takes in a dictionary containing the "stats" information of an anime, and uses it to construct and return an embed
     page (page 1) containing that information.
     :param anime_stat: The dictionary containing the "stats" information of an anime.
     :return: The page 1 embed page of "stats" information for the anime.
     """
-    embed = (discord.Embed(title=anime_stat['name'], colour=discord.Colour(int("FEE63C", 16))))
-    embed.set_thumbnail(url=anime_stat['thumbnail'])
+    embed = (discord.Embed(title=mal_stats['name'], colour=discord.Colour(int("FEE63C", 16))))
+    embed.set_thumbnail(url=mal_stats['thumbnail'])
 
-    if 'watching' in anime_stat.keys():
-        embed.add_field(name="Watching: ", value=anime_stat['watching'], inline=True)
-        embed.add_field(name="Plan To Watch: ", value=anime_stat['plan'], inline=False)
-    elif 'reading' in anime_stat.keys():
-        embed.add_field(name="Reading: ", value=anime_stat['reading'], inline=True)
-        embed.add_field(name="Plan To Read: ", value=anime_stat['plan'], inline=False)
+    if 'watching' in mal_stats.keys():
+        embed.add_field(name="Watching: ", value=mal_stats['watching'], inline=True)
+        embed.add_field(name="Plan To Watch: ", value=mal_stats['plan'], inline=False)
+    elif 'reading' in mal_stats.keys():
+        embed.add_field(name="Reading: ", value=mal_stats['reading'], inline=True)
+        embed.add_field(name="Plan To Read: ", value=mal_stats['plan'], inline=False)
     else:
         print("error")
 
-    embed.add_field(name="Completed: ", value=anime_stat['completed'], inline=False)
-    embed.add_field(name="On Hold: ", value=anime_stat['on_hold'], inline=False)
-    embed.add_field(name="Dropped: ", value=anime_stat['dropped'], inline=False)
-    embed.add_field(name="Total: ", value=anime_stat['total'], inline=False)
+    embed.add_field(name="Completed: ", value=mal_stats['completed'], inline=False)
+    embed.add_field(name="On Hold: ", value=mal_stats['on_hold'], inline=False)
+    embed.add_field(name="Dropped: ", value=mal_stats['dropped'], inline=False)
+    embed.add_field(name="Total: ", value=mal_stats['total'], inline=False)
 
     if db == "animedb":
         footer_text = "Created by VisionBot AnimeStats Protocols (2/3)"
@@ -292,16 +302,16 @@ def build_mal_stats(anime_stat, db):
     return embed
 
 
-def build_mal_scores(anime_stat, db):
+def build_mal_scores(mal_scores, db):
     """
     Takes in a dictionary containing the "stats" information of an anime, and uses it to construct and return an embed
     page (page 3) containing that information.
     :param anime_stat: The dictionary containing the "stats" information of an anime.
     :return: The page 2 embed page of "stats" information for the anime.
     """
-    embed = (discord.Embed(title=anime_stat['name'], colour=discord.Colour(int("FEE63C", 16))))
-    embed.set_thumbnail(url=anime_stat['thumbnail'])
-    embed.add_field(name="Scores: " + '\n', value=anime_stat['scores'], inline=True)
+    embed = (discord.Embed(title=mal_scores['name'], colour=discord.Colour(int("FEE63C", 16))))
+    embed.set_thumbnail(url=mal_scores['thumbnail'])
+    embed.add_field(name="Scores: " + '\n', value=mal_scores['scores'], inline=True)
 
     if db == "animedb":
         footer_text = "Created by VisionBot AnimeStats Protocols (3/3)"
@@ -342,7 +352,6 @@ def display_link(id, db):
         return "[MAL](" + "https://myanimelist.net/anime/" + str(id) + ")"
     else:
         return "[MAL](" + "https://myanimelist.net/manga/" + str(id) + ")"
-
 
 
 def get_genres(genres_list):
