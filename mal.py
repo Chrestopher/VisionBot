@@ -269,17 +269,14 @@ def build_mal_stats(anime_stat, db):
     embed.set_thumbnail(url=anime_stat['thumbnail'])
 
     if 'watching' in anime_stat.keys():
-        print('watching')
         embed.add_field(name="Watching: ", value=anime_stat['watching'], inline=True)
         embed.add_field(name="Plan To Watch: ", value=anime_stat['plan'], inline=False)
     elif 'reading' in anime_stat.keys():
-        print('reading')
         embed.add_field(name="Reading: ", value=anime_stat['reading'], inline=True)
         embed.add_field(name="Plan To Read: ", value=anime_stat['plan'], inline=False)
     else:
         print("error")
 
-    print('help')
     embed.add_field(name="Completed: ", value=anime_stat['completed'], inline=False)
     embed.add_field(name="On Hold: ", value=anime_stat['on_hold'], inline=False)
     embed.add_field(name="Dropped: ", value=anime_stat['dropped'], inline=False)

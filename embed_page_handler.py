@@ -25,7 +25,6 @@ def page_flip_commands(embed, direction):
         elif "AnimeStats" in embed.footer.text:
             return handle_mal_embed(embed, direction, 'animedb')
         elif "MangaStats" in embed.footer.text:
-            print('manga')
             return handle_mal_embed(embed, direction, 'mangadb')
         else:
             return "Not a valid embed"
