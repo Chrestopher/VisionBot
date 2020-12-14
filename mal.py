@@ -244,7 +244,7 @@ def build_mal_info(anime_info, db):
     """
     color = int("FEE63C", 16)
     embed = discord.Embed(title=anime_info['name'], colour=discord.Colour(color),
-                          description=display_link(anime_info["database_id"]))
+                          description=display_link(anime_info["database_id"], db))
     embed.add_field(name="Summary", value=anime_info["summary"])
     embed.set_thumbnail(url=anime_info['thumbnail'])
 
@@ -337,8 +337,12 @@ def char_pic(args):
             return result_pic
 
 
-def display_link(anime_id):
-    return "[MAL](" + "https://myanimelist.net/anime/" + str(anime_id) + ")"
+def display_link(id, db):
+    if db == "animedb":
+        return "[MAL](" + "https://myanimelist.net/anime/" + str(id) + ")"
+    else:
+        return "[MAL](" + "https://myanimelist.net/manga/" + str(id) + ")"
+
 
 
 def get_genres(genres_list):
