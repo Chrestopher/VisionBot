@@ -9,7 +9,7 @@ else:
 
 get_headers = {"secret-key": json_api_key}
 put_headers = {"secret-key": json_api_key, "Content-Type": "application/json", "versioning": "false"}
-profiles_file = "https://api.jsonbin.io/b/5ed27a4579382f568bcfd675"
+profiles_file = "https://api.jsonbin.io/b/5ed27a4579382f568bcfd675/1"
 schedule_file = "https://api.jsonbin.io/b/5ed1939b60775a5685848841"
 
 
